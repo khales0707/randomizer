@@ -75,6 +75,59 @@
     }
     .justwatch-btn:hover { background:#ffd633; }
   </style>
+/* 📱 Ajustes para pantallas chicas */
+@media (max-width: 600px) {
+  body {
+    font-size: 14px;
+    padding: 0 5px;
+  }
+
+  h1 {
+    font-size: 1.6em;
+    padding: 10px;
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .controls input,
+  .controls button {
+    width: 100%;
+    font-size: 1em;
+    margin: 0;
+  }
+
+  .card {
+    flex-direction: column;
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .poster img {
+    max-width: 250px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .info {
+    font-size: 0.9em;
+  }
+
+  .actor img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .justwatch-btn {
+    width: 100%;
+    text-align: center;
+    font-size: 0.95em;
+  }
+}
+
 </head>
 <body>
   <h1>🎬 Ruleta Cinéfila</h1>
