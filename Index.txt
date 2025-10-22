@@ -179,13 +179,13 @@ html, body { width: 100%; overflow-x: hidden; }
 <body>
   <div class="header-personal">
   <img src="icon-192.png" alt="Avatar Mundoo" class="avatar">
-  <h1>Random Movie</h1>
+  <h1>Movie Randomizer</h1>
   <p class="firma">@mundoo.cine</p>
 </div>
   <div class="controls">
     <input type="number" id="numero" placeholder="Elegí un número">
     <button onclick="buscarPelicula()">Buscar película</button>
-    <button onclick="azar()">🎲 Azar puro</button>
+    <button onclick="azar()">🎲 Película al Azar</button>
   </div>
 
   <div id="resultado"></div>
@@ -298,7 +298,7 @@ html, body { width: 100%; overflow-x: hidden; }
               </div>
             `).join("")}
           </div>
-          <a href="${justwatchUrl}" target="_blank" class="justwatch-btn">📺 Ver en plataformas</a>
+          <a href="${justwatchUrl}" target="_blank" class="justwatch-btn">📺 Ver si está en Plataformas</a>
         </div>
       </div>
     `;
