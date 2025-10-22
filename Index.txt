@@ -187,14 +187,11 @@ html, body { width: 100%; overflow-x: hidden; }
   </style>
 </head>
 <body>
-  <<div class="header-personal">
+  <div class="header-personal">
   <img src="icon-192.png" alt="Avatar Mundoo" class="avatar">
-  <div class="header-box">
-    <h1>Random Movie</h1>
-    <p class="firma">@mundoo.cine</p>
-  </div>
+  <h1>Movie Randomizer</h1>
+  <p class="firma">@mundoo.cine</p>
 </div>
-
   <div class="controls">
     <input type="number" id="numero" placeholder="Elegí un número">
     <button onclick="buscarPelicula()">Buscar película</button>
