@@ -11,7 +11,8 @@
   <style>
     html, body {
       height: 100%; 
-      min-height: 100vh;	 
+      min-height: 100vh;
+}	 
     body {
       font-family: 'Montserrat', sans-serif;
       background: url('FONDO.jpg') no-repeat center center fixed;
@@ -205,7 +206,6 @@ html, body { width: 100%; overflow-x: hidden; }
   }
 
   try {
-    // Buscar película en TMDb
     const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=es-ES&query=${encodeURIComponent(peli.Name)}&year=${peli.Year || ""}`;
     const resp = await fetch(searchUrl);
     const data = await resp.json();
