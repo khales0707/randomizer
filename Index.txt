@@ -36,9 +36,8 @@
       font-size: 2.5em; letter-spacing: 2px;
       color: #1db954;
     }
-/* 🎬 Header personalizado con avatar fuera del fondo */
 .header-personal {
-  margin-top: 30px;
+  margin-top: 20px;
   text-align: center;
 }
 
@@ -49,30 +48,20 @@
   object-fit: cover;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
   border: 2px solid #1db954;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
-.header-box {
-  background: rgba(0,0,0,0.7);
-  padding: 20px 30px;
-  border-radius: 12px;
-  display: inline-block;
-  max-width: 400px;
-  margin: 0 auto;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-}
-
-.header-box h1 {
-  font-size: 2em;
+.header-personal h1 {
+  font-size: 2.2em;
   margin: 0;
   color: #1db954;
   letter-spacing: 2px;
 }
 
-.header-box .firma {
+.header-personal .firma {
   font-size: 1em;
   color: #ccc;
-  margin-top: 8px;
+  margin-top: 5px;
 }
 
     .controls {
@@ -190,14 +179,9 @@ html, body { width: 100%; overflow-x: hidden; }
 <body>
   <div class="header-personal">
   <img src="icon-192.png" alt="Avatar Mundoo" class="avatar">
-  <div class="header-box">
-    <h1>Random Movie</h1>
-    <p class="firma">@mundoo.cine</p>
-  </div>
+  <h1>Movie Randomizer</h1>
+  <p class="firma">@mundoo.cine</p>
 </div>
-
-
-
   <div class="controls">
     <input type="number" id="numero" placeholder="Elegí un número">
     <button onclick="buscarPelicula()">Buscar película</button>
