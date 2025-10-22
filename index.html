@@ -161,6 +161,13 @@ html, body { width: 100%; overflow-x: hidden; }
   <script>
     let peliculas = [];
     const API_KEY = "b9911fb46e0e11491607c279cce876a1";
+    // Enter para disparar búsqueda
+  document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("numero");
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") buscarPelicula();
+    });
+  });
 
     // Cargar automáticamente el JSON
     fetch("peliculas.json")
@@ -187,11 +194,89 @@ html, body { width: 100%; overflow-x: hidden; }
     }
 
     async function mostrarPelicula(numero) {
-      const peli = peliculas.find(p => p.Position == numero);
-      if (!peli) { 
-        document.getElementById("resultado").innerHTML = "No encontré esa posición."; 
-        return; 
-      }
+  const contenedor = document.getElementById("resultado");
+  // Estado inicial: cargando
+  contenedor.innerHTML = "<div class='card'><div class='info'><p>Buscando…</p></div></div>";
+
+  const peli = peliculas.find(p => p.Position == numero);
+  if (!peli) {
+    contenedor.innerHTML = "<div class='card'><div class='info'><p>No encontré esa posición.</p></div></div>";
+    return;
+  }
+
+  try {
+    // Buscar película en TMDb
+    const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=es-ES&query=${encodeURIComponent(peli.Name)}&year=${peli.Year || ""}`;
+    const resp = await fetch(searchUrl);
+    const data = await resp.json();
+
+    if (!data.results || data.results.length === 0) {
+      contenedor.innerHTML = `<div class='card'><div class='info'><p>No encontré "${peli.Name}" en TMDb.</p></div></div>`;
+      return;
+    }
+
+    const movie = data.results[0];
+
+    // Detalles
+    const detailsResp = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${API_KEY}&language=es-ES`);
+    let details = await detailsResp.json();
+    if (!details.overview) {
+      const detailsEnResp = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${API_KEY}&language=en-US`);
+      const detailsEn = await detailsEnResp.json();
+      if (detailsEn.overview) details.overview = detailsEn.overview;
+    }
+
+    // Créditos
+    const creditsResp = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${API_KEY}&language=es-ES`);
+    const credits = await creditsResp.json();
+
+    const poster = movie.poster_path ? `https://image.tmdb.org/t/p/w300${movie.poster_path}` : "";
+    const director = credits.crew?.find(p => p.job === "Director");
+    const actores = (credits.cast || []).slice(0,4);
+    const generos = (details.genres || []).map(g => g.name).join(", ");
+
+    // País para JustWatch
+    let country = "ar";
+    const locale = navigator.language || "";
+    if (locale.toLowerCase().includes("es-es")) country = "es";
+    else if (locale.toLowerCase().includes("es-mx")) country = "mx";
+    else if (locale.toLowerCase().includes("es-ar")) country = "ar";
+
+    const tituloOriginal = details.original_title || peli.Name;
+    const tituloLocal = movie.title || tituloOriginal;
+    const tituloMostrar = (tituloOriginal !== tituloLocal) ? `${tituloOriginal} (${tituloLocal})` : tituloOriginal;
+    const justwatchUrl = `https://www.justwatch.com/${country}/buscar?q=${encodeURIComponent(tituloOriginal)}`;
+
+    // Render final
+    contenedor.innerHTML = `
+      <div class="card">
+        <div class="poster">${poster ? `<img src="${poster}" alt="${tituloOriginal}">` : ""}</div>
+        <div class="info">
+          <div class="numero">Película #${peli.Position} de tu lista</div>
+          <h2>${tituloMostrar} (${movie.release_date?.slice(0,4) || peli.Year || ""})</h2>
+          <p>${details.overview || "Sin sinopsis disponible."}</p>
+          <div class="extra">
+            <strong>Géneros:</strong> ${generos || "N/D"}<br>
+            <strong>Director:</strong> ${director ? director.name : "N/D"}<br>
+          </div>
+          <div class="cast">
+            ${actores.map(a => `
+              <div class="actor">
+                ${a.profile_path ? `<img src="https://image.tmdb.org/t/p/w185${a.profile_path}" alt="${a.name}">` : ""}
+                <span>${a.name}</span>
+              </div>
+            `).join("")}
+          </div>
+          <a href="${justwatchUrl}" target="_blank" class="justwatch-btn">📺 Ver en plataformas</a>
+        </div>
+      </div>
+    `;
+  } catch (e) {
+    contenedor.innerHTML = "<div class='card'><div class='info'><p>Ocurrió un error al buscar datos. Intentá de nuevo.</p></div></div>";
+    console.error(e);
+  }
+}
+
 
       // Buscar película en TMDb
       const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=es-ES&query=${encodeURIComponent(peli.Name)}&year=${peli.Year || ""}`;
