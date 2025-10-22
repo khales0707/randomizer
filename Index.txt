@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="es">
 <head>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1db954">
@@ -10,188 +8,243 @@
 
   <style>
     html, body {
-      height: 100%; 
+      height: 100%;
       min-height: 100vh;
-}	 
+      width: 100%;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Montserrat', sans-serif;
       background: url('FONDO.jpg') no-repeat center center fixed;
       background-size: cover;
       background-attachment: fixed;
-      background-color: #000;	
+      background-color: #000;
       color: #eee;
       margin: 0;
       padding: 0;
       text-align: center;
     }
+
     body::before {
       content: "";
       position: fixed; top:0; left:0; right:0; bottom:0;
       background: rgba(0,0,0,0.65);
       z-index: -1;
     }
-    h1 {
-      background: rgba(0,0,0,0.7);
-      padding: 20px; margin: 0;
-      font-size: 2.5em; letter-spacing: 2px;
-      color: #1db954;
+
+    /* 🎬 Header personalizado */
+    .header-personal {
+      margin-top: 30px;
+      text-align: center;
     }
-.header-personal {
-  margin-top: 20px;
-  text-align: center;
-}
 
-.header-personal .avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  border: 2px solid #1db954;
-  margin-bottom: 10px;
-}
+    .header-personal .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      border: 2px solid #1db954;
+      margin-bottom: 15px;
+    }
 
-.header-box {
-  background: rgba(0,0,0,0.7);
-  padding: 20px 30px;
-  border-radius: 12px;
-  display: inline-block;
-  max-width: 400px;
-  margin: 0 auto;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-}
+    .header-box {
+      background: rgba(0,0,0,0.7);
+      padding: 20px 30px;
+      border-radius: 12px;
+      display: inline-block;
+      max-width: 400px;
+      margin: 0 auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
 
-.header-personal h1 {
-  font-size: 2.2em;
-  margin: 0;
-  color: #1db954;
-  letter-spacing: 2px;
-}
+    .header-box h1 {
+      font-size: 2em;
+      margin: 0;
+      color: #1db954;
+      letter-spacing: 2px;
+    }
 
-.header-personal .firma {
-  font-size: 1em;
-  color: #ccc;
-  margin-top: 5px;
-}
+    .header-box .firma {
+      font-size: 1em;
+      color: #ccc;
+      margin-top: 8px;
+    }
 
     .controls {
       background: rgba(0,0,0,0.7);
-      padding: 15px; position: sticky; top: 0; z-index: 10;
+      padding: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
+
     input, button {
-      padding: 10px 15px; font-size: 16px;
-      margin: 5px; border: none; border-radius: 5px;
+      padding: 10px 15px;
+      font-size: 16px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
     }
-    input { background: rgba(255,255,255,0.1); color: #fff; }
-    button { background: #1db954; color: #fff; cursor: pointer; }
-    button:hover { background: #1ed760; }
+
+    input {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+
+    button {
+      background: #1db954;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1ed760;
+    }
+
     .card {
-      margin: 30px auto; padding: 20px;
+      margin: 30px auto;
+      padding: 20px;
       background: rgba(20,20,20,0.85);
-      border-radius: 12px; max-width: 900px;
+      border-radius: 12px;
+      max-width: 900px;
       border: 1px solid rgba(255,255,255,0.1);
-      display: flex; gap: 20px; text-align: left;
+      display: flex;
+      gap: 20px;
+      text-align: left;
     }
-    .poster { flex: 1; }
+
+    .poster {
+      flex: 1;
+    }
+
     .poster img {
-      width: 100%; border-radius: 8px;
+      width: 100%;
+      border-radius: 8px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.8);
       border: 2px solid rgba(255,255,255,0.1);
     }
-    .info { flex: 2; }
-    h2 { color: #ffcc00; margin-top: 0; }
-    .numero { font-size: 1.1em; color: #ccc; margin-bottom: 10px; }
-    .extra { font-size: 0.9em; color: #bbb; margin-top: 10px; }
+
+    .info {
+      flex: 2;
+    }
+
+    h2 {
+      color: #ffcc00;
+      margin-top: 0;
+    }
+
+    .numero {
+      font-size: 1.1em;
+      color: #ccc;
+      margin-bottom: 10px;
+    }
+
+    .extra {
+      font-size: 0.9em;
+      color: #bbb;
+      margin-top: 10px;
+    }
+
     .cast {
-      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
     }
+
     .actor {
-      display: flex; align-items: center; gap: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
       background: rgba(255,255,255,0.05);
-      padding: 6px 10px; border-radius: 20px;
+      padding: 6px 10px;
+      border-radius: 20px;
     }
+
     .actor img {
-      width: 80px; height: 80px;
-      border-radius: 50%; object-fit: cover;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
     }
+
     .justwatch-btn {
-      display:inline-block; padding:10px 15px;
-      background:#ffcc00; color:#000; text-decoration:none;
-      border-radius:6px; font-weight:bold; margin-top:10px;
+      display: inline-block;
+      padding: 10px 15px;
+      background: #ffcc00;
+      color: #000;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-top: 10px;
     }
-    .justwatch-btn:hover { background:#ffd633; }
-/* 📱 Ajustes para pantallas chicas */
-@media (max-width: 600px) {
-  body {
-    font-size: 14px;
-    padding: 0 5px;
-  }
 
-  h1 {
-    font-size: 1.6em;
-    padding: 10px;
-  }
+    .justwatch-btn:hover {
+      background: #ffd633;
+    }
 
-  .controls {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
+    /* 📱 Mobile */
+    @media (max-width: 600px) {
+      body {
+        font-size: 14px;
+        padding: 0 5px;
+        background-attachment: scroll;
+      }
 
-  .controls input,
-  .controls button {
-    width: 100%;
-    font-size: 1em;
-    margin: 0;
-  }
+      .controls {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
 
-  .card {
-    flex-direction: column;
-    padding: 15px;
-    gap: 15px;
-  }
+      .controls input,
+      .controls button {
+        width: 100%;
+        font-size: 1em;
+        margin: 0;
+      }
 
-  .poster img {
-    max-width: 250px;
-    margin: 0 auto;
-    display: block;
-  }
+      .card {
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px;
+      }
 
-  .info {
-    font-size: 0.9em;
-  }
+      .poster img {
+        max-width: 250px;
+        margin: 0 auto;
+        display: block;
+      }
 
-  .actor img {
-    width: 50px;
-    height: 50px;
-  }
+      .info {
+        font-size: 0.9em;
+      }
 
-  .justwatch-btn {
-    width: 100%;
-    text-align: center;
-    font-size: 0.95em;
-  }
-}
-/* Reseteos y prevención de desbordes */
-* { box-sizing: border-box; }
-img { max-width: 100%; height: auto; }
-html, body { width: 100%; overflow-x: hidden; }
+      .actor img {
+        width: 50px;
+        height: 50px;
+      }
 
-/* En mobile, evitar el fondo “fixed” que rompe el zoom */
-@media (max-width: 600px) {
-  body {
-    background-attachment: scroll;
-  }
-}
-
+      .justwatch-btn {
+        width: 100%;
+        text-align: center;
+        font-size: 0.95em;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="header-personal">
-  <img src="icon-192.png" alt="Avatar Mundoo" class="avatar">
-  <h1>Movie Randomizer</h1>
-  <p class="firma">@mundoo.cine</p>
-</div>
+    <img src="icon-192.png" alt="Avatar Mundoo" class="avatar">
+    <div class="header-box">
+      <h1>Random Movie</h1>
+      <p class="firma">@mundoo.cine</p>
+    </div>
+  </div>
+
   <div class="controls">
     <input type="number" id="numero" placeholder="Elegí un número">
     <button onclick="buscarPelicula()">Buscar película</button>
@@ -199,17 +252,17 @@ html, body { width: 100%; overflow-x: hidden; }
   </div>
 
   <div id="resultado"></div>
-
   <script>
     let peliculas = [];
     const API_KEY = "b9911fb46e0e11491607c279cce876a1";
+
     // Enter para disparar búsqueda
-  document.addEventListener("DOMContentLoaded", () => {
-    const input = document.getElementById("numero");
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") buscarPelicula();
+    document.addEventListener("DOMContentLoaded", () => {
+      const input = document.getElementById("numero");
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") buscarPelicula();
+      });
     });
-  });
 
     // Cargar automáticamente el JSON
     fetch("peliculas.json")
@@ -219,6 +272,7 @@ html, body { width: 100%; overflow-x: hidden; }
         console.log("Películas cargadas:", peliculas.length);
       })
       .catch(err => console.error("Error cargando JSON:", err));
+
     // Buscar por número
     function buscarPelicula() {
       const numero = document.getElementById("numero").value;
@@ -227,98 +281,97 @@ html, body { width: 100%; overflow-x: hidden; }
 
     // Selección al azar
     function azar() {
-      if (peliculas.length === 0) { 
-        alert("Todavía no se cargaron películas"); 
-        return; 
+      if (peliculas.length === 0) {
+        alert("Todavía no se cargaron películas");
+        return;
       }
       const randomIndex = Math.floor(Math.random() * peliculas.length);
       mostrarPelicula(peliculas[randomIndex].Position);
     }
 
     async function mostrarPelicula(numero) {
-  const contenedor = document.getElementById("resultado");
-  // Estado inicial: cargando
-  contenedor.innerHTML = "<div class='card'><div class='info'><p>Buscando…</p></div></div>";
+      const contenedor = document.getElementById("resultado");
+      contenedor.innerHTML = "<div class='card'><div class='info'><p>Buscando…</p></div></div>";
 
-  const peli = peliculas.find(p => p.Position == numero);
-  if (!peli) {
-    contenedor.innerHTML = "<div class='card'><div class='info'><p>No encontré esa posición.</p></div></div>";
-    return;
-  }
+      const peli = peliculas.find(p => p.Position == numero);
+      if (!peli) {
+        contenedor.innerHTML = "<div class='card'><div class='info'><p>No encontré esa posición.</p></div></div>";
+        return;
+      }
 
-  try {
-    const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=es-ES&query=${encodeURIComponent(peli.Name)}&year=${peli.Year || ""}`;
-    const resp = await fetch(searchUrl);
-    const data = await resp.json();
+      try {
+        const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=es-ES&query=${encodeURIComponent(peli.Name)}&year=${peli.Year || ""}`;
+        const resp = await fetch(searchUrl);
+        const data = await resp.json();
 
-    if (!data.results || data.results.length === 0) {
-      contenedor.innerHTML = `<div class='card'><div class='info'><p>No encontré "${peli.Name}" en TMDb.</p></div></div>`;
-      return;
-    }
+        if (!data.results || data.results.length === 0) {
+          contenedor.innerHTML = `<div class='card'><div class='info'><p>No encontré "${peli.Name}" en TMDb.</p></div></div>`;
+          return;
+        }
 
-    const movie = data.results[0];
+        const movie = data.results[0];
 
-    // Detalles
-    const detailsResp = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${API_KEY}&language=es-ES`);
-    let details = await detailsResp.json();
-    if (!details.overview) {
-      const detailsEnResp = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${API_KEY}&language=en-US`);
-      const detailsEn = await detailsEnResp.json();
-      if (detailsEn.overview) details.overview = detailsEn.overview;
-    }
+        // Detalles
+        const detailsResp = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${API_KEY}&language=es-ES`);
+        let details = await detailsResp.json();
+        if (!details.overview) {
+          const detailsEnResp = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${API_KEY}&language=en-US`);
+          const detailsEn = await detailsEnResp.json();
+          if (detailsEn.overview) details.overview = detailsEn.overview;
+        }
 
-    // Créditos
-    const creditsResp = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${API_KEY}&language=es-ES`);
-    const credits = await creditsResp.json();
+        // Créditos
+        const creditsResp = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${API_KEY}&language=es-ES`);
+        const credits = await creditsResp.json();
 
-    const poster = movie.poster_path ? `https://image.tmdb.org/t/p/w300${movie.poster_path}` : "";
-    const director = credits.crew?.find(p => p.job === "Director");
-    const actores = (credits.cast || []).slice(0,4);
-    const generos = (details.genres || []).map(g => g.name).join(", ");
+        const poster = movie.poster_path ? `https://image.tmdb.org/t/p/w300${movie.poster_path}` : "";
+        const director = credits.crew?.find(p => p.job === "Director");
+        const actores = (credits.cast || []).slice(0, 4);
+        const generos = (details.genres || []).map(g => g.name).join(", ");
 
-    // País para JustWatch
-    let country = "ar";
-    const locale = navigator.language || "";
-    if (locale.toLowerCase().includes("es-es")) country = "es";
-    else if (locale.toLowerCase().includes("es-mx")) country = "mx";
-    else if (locale.toLowerCase().includes("es-ar")) country = "ar";
+        // País para JustWatch
+        let country = "ar";
+        const locale = navigator.language || "";
+        if (locale.toLowerCase().includes("es-es")) country = "es";
+        else if (locale.toLowerCase().includes("es-mx")) country = "mx";
+        else if (locale.toLowerCase().includes("es-ar")) country = "ar";
 
-    const tituloOriginal = details.original_title || peli.Name;
-    const tituloLocal = movie.title || tituloOriginal;
-    const tituloMostrar = (tituloOriginal !== tituloLocal) ? `${tituloOriginal} (${tituloLocal})` : tituloOriginal;
-    const justwatchUrl = `https://www.justwatch.com/${country}/buscar?q=${encodeURIComponent(tituloOriginal)}`;
+        const tituloOriginal = details.original_title || peli.Name;
+        const tituloLocal = movie.title || tituloOriginal;
+        const tituloMostrar = (tituloOriginal !== tituloLocal) ? `${tituloOriginal} (${tituloLocal})` : tituloOriginal;
+        const justwatchUrl = `https://www.justwatch.com/${country}/buscar?q=${encodeURIComponent(tituloOriginal)}`;
 
-    // Render final
-    contenedor.innerHTML = `
-      <div class="card">
-        <div class="poster">${poster ? `<img src="${poster}" alt="${tituloOriginal}">` : ""}</div>
-        <div class="info">
-          <div class="numero">Película #${peli.Position} de tu lista</div>
-          <h2>${tituloMostrar} (${movie.release_date?.slice(0,4) || peli.Year || ""})</h2>
-          <p>${details.overview || "Sin sinopsis disponible."}</p>
-          <div class="extra">
-            <strong>Géneros:</strong> ${generos || "N/D"}<br>
-            <strong>Director:</strong> ${director ? director.name : "N/D"}<br>
-          </div>
-          <div class="cast">
-            ${actores.map(a => `
-              <div class="actor">
-                ${a.profile_path ? `<img src="https://image.tmdb.org/t/p/w185${a.profile_path}" alt="${a.name}">` : ""}
-                <span>${a.name}</span>
+        // Render final
+        contenedor.innerHTML = `
+          <div class="card">
+            <div class="poster">${poster ? `<img src="${poster}" alt="${tituloOriginal}">` : ""}</div>
+            <div class="info">
+              <div class="numero">Película #${peli.Position} de tu lista</div>
+              <h2>${tituloMostrar} (${movie.release_date?.slice(0, 4) || peli.Year || ""})</h2>
+              <p>${details.overview || "Sin sinopsis disponible."}</p>
+              <div class="extra">
+                <strong>Géneros:</strong> ${generos || "N/D"}<br>
+                <strong>Director:</strong> ${director ? director.name : "N/D"}<br>
               </div>
-            `).join("")}
+              <div class="cast">
+                ${actores.map(a => `
+                  <div class="actor">
+                    ${a.profile_path ? `<img src="https://image.tmdb.org/t/p/w185${a.profile_path}" alt="${a.name}">` : ""}
+                    <span>${a.name}</span>
+                  </div>
+                `).join("")}
+              </div>
+              <a href="${justwatchUrl}" target="_blank" class="justwatch-btn">📺 Ver si está en Plataformas</a>
+            </div>
           </div>
-          <a href="${justwatchUrl}" target="_blank" class="justwatch-btn">📺 Ver si está disponible en Plataformas</a>
-        </div>
-      </div>
-    `;
-  } catch (e) {
-    contenedor.innerHTML = "<div class='card'><div class='info'><p>Ocurrió un error al buscar datos. Intentá de nuevo.</p></div></div>";
-    console.error(e);
-  }
-}
+        `;
+      } catch (e) {
+        contenedor.innerHTML = "<div class='card'><div class='info'><p>Ocurrió un error al buscar datos. Intentá de nuevo.</p></div></div>";
+        console.error(e);
+      }
+    }
 
-   // Registrar Service Worker
+    // Registrar Service Worker
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("service-worker.js")
         .then(() => console.log("Service Worker registrado"))
@@ -327,4 +380,3 @@ html, body { width: 100%; overflow-x: hidden; }
   </script>
 </body>
 </html>
-
