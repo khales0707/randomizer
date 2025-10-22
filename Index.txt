@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1db954">
-
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1db954">
   <meta charset="UTF-8">
   <title>Ruleta Cinéfila</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -82,8 +80,6 @@
   <h1>🎬 Ruleta Cinéfila</h1>
 
   <div class="controls">
-    <p>Cargá tu CSV de Letterboxd:</p>
-    <input type="file" id="csvFile" accept=".csv"><br>
     <input type="number" id="numero" placeholder="Elegí un número">
     <button onclick="buscarPelicula()">Buscar película</button>
     <button onclick="azar()">🎲 Azar puro</button>
@@ -93,42 +89,26 @@
 
   <script>
     let peliculas = [];
-    const API_KEY = "b9911fb46e0e11491607c279cce876a1"; // <-- poné tu API key de TMDb
+    const API_KEY = "b9911fb46e0e11491607c279cce876a1";
 
-    // Carga robusta del CSV
-    document.getElementById("csvFile").addEventListener("change", async function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const rawText = await file.text();
-      const lines = rawText.split(/\r?\n/);
-
-      // Buscar la línea donde empieza la cabecera real
-      const headerIndex = lines.findIndex(l => l.startsWith("Position,Name"));
-      if (headerIndex === -1) {
-        alert("No encontré la cabecera 'Position,Name' en el CSV");
-        return;
-      }
-
-      const cleanedCSV = lines.slice(headerIndex).join("\n");
-
-      Papa.parse(cleanedCSV, {
-        header: true,
-        skipEmptyLines: true,
-        transformHeader: h => (h || "").trim(),
-        complete: function(results) {
-          peliculas = results.data.filter(r => r.Name);
-          alert("CSV cargado con " + peliculas.length + " películas");
-        }
-      });
-    });
-    async function buscarPelicula() {
+    // Cargar automáticamente el JSON
+    fetch("peliculas.json")
+      .then(resp => resp.json())
+      .then(data => {
+        peliculas = data;
+        console.log("Películas cargadas:", peliculas.length);
+      })
+      .catch(err => console.error("Error cargando JSON:", err));
+    // Buscar por número
+    function buscarPelicula() {
       const numero = document.getElementById("numero").value;
       mostrarPelicula(numero);
     }
 
+    // Selección al azar
     function azar() {
       if (peliculas.length === 0) { 
-        alert("Primero cargá el CSV"); 
+        alert("Todavía no se cargaron películas"); 
         return; 
       }
       const randomIndex = Math.floor(Math.random() * peliculas.length);
@@ -153,18 +133,16 @@
 
       const movie = data.results[0];
 
-      // Detalles en español
+      // Detalles
       const detailsResp = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${API_KEY}&language=es-ES`);
       let details = await detailsResp.json();
-
-      // Fallback: si no hay overview en español, pedir en inglés
       if (!details.overview) {
         const detailsEnResp = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${API_KEY}&language=en-US`);
         const detailsEn = await detailsEnResp.json();
         if (detailsEn.overview) details.overview = detailsEn.overview;
       }
 
-      // Créditos (cast + crew)
+      // Créditos
       const creditsResp = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${API_KEY}&language=es-ES`);
       const credits = await creditsResp.json();
 
@@ -173,18 +151,16 @@
       const actores = (credits.cast || []).slice(0,4);
       const generos = (details.genres || []).map(g => g.name).join(", ");
 
-      // País automático para JustWatch
+      // País para JustWatch
       let country = "ar";
-      const locale = navigator.language || navigator.userLanguage || "";
+      const locale = navigator.language || "";
       if (locale.toLowerCase().includes("es-es")) country = "es";
       else if (locale.toLowerCase().includes("es-mx")) country = "mx";
       else if (locale.toLowerCase().includes("es-ar")) country = "ar";
 
-      // Título original + traducción
-      const tituloOriginal = details.original_title || movie.original_title || peli.Name;
+      const tituloOriginal = details.original_title || peli.Name;
       const tituloLocal = movie.title || tituloOriginal;
       const tituloMostrar = (tituloOriginal !== tituloLocal) ? `${tituloOriginal} (${tituloLocal})` : tituloOriginal;
-
       const justwatchUrl = `https://www.justwatch.com/${country}/buscar?q=${encodeURIComponent(tituloOriginal)}`;
 
       // Render final
@@ -212,12 +188,14 @@
         </div>
       `;
     }
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js")
-    .then(() => console.log("Service Worker registrado"))
-    .catch(err => console.error("Error registrando SW:", err));
-}
 
+    // Registrar Service Worker
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js")
+        .then(() => console.log("Service Worker registrado"))
+        .catch(err => console.error("Error registrando SW:", err));
+    }
   </script>
 </body>
 </html>
+
