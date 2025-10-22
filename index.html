@@ -37,6 +37,40 @@
       color: #1db954;
     }
 .header-personal {
+  margin-top: 0;
+  text-align: center;
+}
+
+.header-box {
+  background: rgba(0,0,0,0.7);
+  padding: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.header-box .avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  border: 2px solid #1db954;
+  margin-bottom: 10px;
+}
+
+.header-box h1 {
+  font-size: 2.2em;
+  margin: 0;
+  color: #1db954;
+  letter-spacing: 2px;
+}
+
+.header-box .firma {
+  font-size: 1em;
+  color: #ccc;
+  margin-top: 5px;
+}
+
+.header-personal {
   margin-top: 20px;
   text-align: center;
 }
@@ -178,10 +212,13 @@ html, body { width: 100%; overflow-x: hidden; }
 </head>
 <body>
   <div class="header-personal">
-  <img src="icon-192.png" alt="Avatar Mundoo" class="avatar">
-  <h1>Movie Randomizer</h1>
-  <p class="firma">@mundoo.cine</p>
+  <div class="header-box">
+    <img src="icon-192.png" alt="Avatar Mundoo" class="avatar">
+    <h1>Random Movie</h1>
+    <p class="firma">@mundoo.cine</p>
+  </div>
 </div>
+
   <div class="controls">
     <input type="number" id="numero" placeholder="Elegí un número">
     <button onclick="buscarPelicula()">Buscar película</button>
