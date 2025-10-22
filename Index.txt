@@ -4,7 +4,7 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1db954">
   <meta charset="UTF-8">
-  <title>Ruleta Cinéfila</title>
+  <title>Randomizer by Mundoo.Cine</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -148,7 +148,7 @@ html, body { width: 100%; overflow-x: hidden; }
   </style>
 </head>
 <body>
-  <h1>🎬 Ruleta Cinéfila</h1>
+  <h1>🎬 Random Movie by @Mundoo.Cine</h1>
 
   <div class="controls">
     <input type="number" id="numero" placeholder="Elegí un número">
