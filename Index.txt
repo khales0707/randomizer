@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1db954">
+
+  <meta charset="UTF-8">
+  <title>Ruleta Cinéfila</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: url('FONDO.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #eee;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    body::before {
+      content: "";
+      position: fixed; top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.65);
+      z-index: -1;
+    }
+    h1 {
+      background: rgba(0,0,0,0.7);
+      padding: 20px; margin: 0;
+      font-size: 2.5em; letter-spacing: 2px;
+      color: #1db954;
+    }
+    .controls {
+      background: rgba(0,0,0,0.7);
+      padding: 15px; position: sticky; top: 0; z-index: 10;
+    }
+    input, button {
+      padding: 10px 15px; font-size: 16px;
+      margin: 5px; border: none; border-radius: 5px;
+    }
+    input { background: rgba(255,255,255,0.1); color: #fff; }
+    button { background: #1db954; color: #fff; cursor: pointer; }
+    button:hover { background: #1ed760; }
+    .card {
+      margin: 30px auto; padding: 20px;
+      background: rgba(20,20,20,0.85);
+      border-radius: 12px; max-width: 900px;
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; gap: 20px; text-align: left;
+    }
+    .poster { flex: 1; }
+    .poster img {
+      width: 100%; border-radius: 8px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.8);
+      border: 2px solid rgba(255,255,255,0.1);
+    }
+    .info { flex: 2; }
+    h2 { color: #ffcc00; margin-top: 0; }
+    .numero { font-size: 1.1em; color: #ccc; margin-bottom: 10px; }
+    .extra { font-size: 0.9em; color: #bbb; margin-top: 10px; }
+    .cast {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;
+    }
+    .actor {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.05);
+      padding: 6px 10px; border-radius: 20px;
+    }
+    .actor img {
+      width: 80px; height: 80px;
+      border-radius: 50%; object-fit: cover;
+    }
+    .justwatch-btn {
+      display:inline-block; padding:10px 15px;
+      background:#ffcc00; color:#000; text-decoration:none;
+      border-radius:6px; font-weight:bold; margin-top:10px;
+    }
+    .justwatch-btn:hover { background:#ffd633; }
+  </style>
+</head>
+<body>
+  <h1>🎬 Ruleta Cinéfila</h1>
+
+  <div class="controls">
+    <p>Cargá tu CSV de Letterboxd:</p>
+    <input type="file" id="csvFile" accept=".csv"><br>
+    <input type="number" id="numero" placeholder="Elegí un número">
+    <button onclick="buscarPelicula()">Buscar película</button>
+    <button onclick="azar()">🎲 Azar puro</button>
+  </div>
+
+  <div id="resultado"></div>
+
+  <script>
+    let peliculas = [];
+    const API_KEY = "b9911fb46e0e11491607c279cce876a1"; // <-- poné tu API key de TMDb
+
+    // Carga robusta del CSV
+    document.getElementById("csvFile").addEventListener("change", async function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const rawText = await file.text();
+      const lines = rawText.split(/\r?\n/);
+
+      // Buscar la línea donde empieza la cabecera real
+      const headerIndex = lines.findIndex(l => l.startsWith("Position,Name"));
+      if (headerIndex === -1) {
+        alert("No encontré la cabecera 'Position,Name' en el CSV");
+        return;
+      }
+
+      const cleanedCSV = lines.slice(headerIndex).join("\n");
+
+      Papa.parse(cleanedCSV, {
+        header: true,
+        skipEmptyLines: true,
+        transformHeader: h => (h || "").trim(),
+        complete: function(results) {
+          peliculas = results.data.filter(r => r.Name);
+          alert("CSV cargado con " + peliculas.length + " películas");
+        }
+      });
+    });
+    async function buscarPelicula() {
+      const numero = document.getElementById("numero").value;
+      mostrarPelicula(numero);
+    }
+
+    function azar() {
+      if (peliculas.length === 0) { 
+        alert("Primero cargá el CSV"); 
+        return; 
+      }
+      const randomIndex = Math.floor(Math.random() * peliculas.length);
+      mostrarPelicula(peliculas[randomIndex].Position);
+    }
+
+    async function mostrarPelicula(numero) {
+      const peli = peliculas.find(p => p.Position == numero);
+      if (!peli) { 
+        document.getElementById("resultado").innerHTML = "No encontré esa posición."; 
+        return; 
+      }
+
+      // Buscar película en TMDb
+      const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=es-ES&query=${encodeURIComponent(peli.Name)}&year=${peli.Year || ""}`;
+      const resp = await fetch(searchUrl);
+      const data = await resp.json();
+      if (!data.results || data.results.length === 0) {
+        document.getElementById("resultado").innerHTML = `No encontré "${peli.Name}" en TMDb.`; 
+        return;
+      }
+
+      const movie = data.results[0];
+
+      // Detalles en español
+      const detailsResp = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${API_KEY}&language=es-ES`);
+      let details = await detailsResp.json();
+
+      // Fallback: si no hay overview en español, pedir en inglés
+      if (!details.overview) {
+        const detailsEnResp = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${API_KEY}&language=en-US`);
+        const detailsEn = await detailsEnResp.json();
+        if (detailsEn.overview) details.overview = detailsEn.overview;
+      }
+
+      // Créditos (cast + crew)
+      const creditsResp = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${API_KEY}&language=es-ES`);
+      const credits = await creditsResp.json();
+
+      const poster = movie.poster_path ? `https://image.tmdb.org/t/p/w300${movie.poster_path}` : "";
+      const director = credits.crew?.find(p => p.job === "Director");
+      const actores = (credits.cast || []).slice(0,4);
+      const generos = (details.genres || []).map(g => g.name).join(", ");
+
+      // País automático para JustWatch
+      let country = "ar";
+      const locale = navigator.language || navigator.userLanguage || "";
+      if (locale.toLowerCase().includes("es-es")) country = "es";
+      else if (locale.toLowerCase().includes("es-mx")) country = "mx";
+      else if (locale.toLowerCase().includes("es-ar")) country = "ar";
+
+      // Título original + traducción
+      const tituloOriginal = details.original_title || movie.original_title || peli.Name;
+      const tituloLocal = movie.title || tituloOriginal;
+      const tituloMostrar = (tituloOriginal !== tituloLocal) ? `${tituloOriginal} (${tituloLocal})` : tituloOriginal;
+
+      const justwatchUrl = `https://www.justwatch.com/${country}/buscar?q=${encodeURIComponent(tituloOriginal)}`;
+
+      // Render final
+      document.getElementById("resultado").innerHTML = `
+        <div class="card">
+          <div class="poster">${poster ? `<img src="${poster}" alt="${tituloOriginal}">` : ""}</div>
+          <div class="info">
+            <div class="numero">Película #${peli.Position} de tu lista</div>
+            <h2>${tituloMostrar} (${movie.release_date?.slice(0,4) || peli.Year || ""})</h2>
+            <p>${details.overview || "Sin sinopsis disponible."}</p>
+            <div class="extra">
+              <strong>Géneros:</strong> ${generos || "N/D"}<br>
+              <strong>Director:</strong> ${director ? director.name : "N/D"}<br>
+            </div>
+            <div class="cast">
+              ${actores.map(a => `
+                <div class="actor">
+                  ${a.profile_path ? `<img src="https://image.tmdb.org/t/p/w185${a.profile_path}" alt="${a.name}">` : ""}
+                  <span>${a.name}</span>
+                </div>
+              `).join("")}
+            </div>
+            <a href="${justwatchUrl}" target="_blank" class="justwatch-btn">📺 Ver en plataformas</a>
+          </div>
+        </div>
+      `;
+    }
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+    .then(() => console.log("Service Worker registrado"))
+    .catch(err => console.error("Error registrando SW:", err));
+}
+
+  </script>
+</body>
+</html>
