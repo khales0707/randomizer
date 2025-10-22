@@ -36,6 +36,34 @@
       font-size: 2.5em; letter-spacing: 2px;
       color: #1db954;
     }
+.header-personal {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.header-personal .avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  border: 2px solid #1db954;
+  margin-bottom: 10px;
+}
+
+.header-personal h1 {
+  font-size: 2.2em;
+  margin: 0;
+  color: #1db954;
+  letter-spacing: 2px;
+}
+
+.header-personal .firma {
+  font-size: 1em;
+  color: #ccc;
+  margin-top: 5px;
+}
+
     .controls {
       background: rgba(0,0,0,0.7);
       padding: 15px; position: sticky; top: 0; z-index: 10;
@@ -149,8 +177,11 @@ html, body { width: 100%; overflow-x: hidden; }
   </style>
 </head>
 <body>
-  <h1>🎬 Random Movie by @Mundoo.Cine</h1>
-
+  <div class="header-personal">
+  <img src="icon-192.png" alt="Avatar Mundoo" class="avatar">
+  <h1>Random Movie</h1>
+  <p class="firma">@mundoo.cine</p>
+</div>
   <div class="controls">
     <input type="number" id="numero" placeholder="Elegí un número">
     <button onclick="buscarPelicula()">Buscar película</button>
