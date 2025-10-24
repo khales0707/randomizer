@@ -1,6 +1,181 @@
 [
   {
     "Position": 1,
+    "Name": "Arthur Christmas",
+    "Year": 2011
+  },
+  {
+    "Position": 2,
+    "Name": "Noelle",
+    "Year": 2019
+  },
+  {
+    "Position": 3,
+    "Name": "Love Hard",
+    "Year": 2021
+  },
+  {
+    "Position": 4,
+    "Name": "The Holiday",
+    "Year": 2006
+  },
+  {
+    "Position": 5,
+    "Name": "Spirited",
+    "Year": 2022
+  },
+  {
+    "Position": 6,
+    "Name": "A Christmas Story Christmas",
+    "Year": 2022
+  },
+  {
+    "Position": 7,
+    "Name": "The Noel Diary",
+    "Year": 2022
+  },
+  {
+    "Position": 8,
+    "Name": "Your Christmas or Mine 2",
+    "Year": 2023
+  },
+  {
+    "Position": 9,
+    "Name": "Christmas Eve in Miller's Point",
+    "Year": 2024
+  },
+  {
+    "Position": 10,
+    "Name": "Dear Santa",
+    "Year": 2024
+  },
+  {
+    "Position": 11,
+    "Name": "The Best Christmas Pageant Ever",
+    "Year": 2024
+  },
+  {
+    "Position": 12,
+    "Name": "Nutcrackers",
+    "Year": 2024
+  },
+  {
+    "Position": 13,
+    "Name": "It's a Wonderful Life",
+    "Year": 1946
+  },
+  {
+    "Position": 14,
+    "Name": "The Polar Express",
+    "Year": 2004
+  },
+  {
+    "Position": 15,
+    "Name": "A Christmas Carol",
+    "Year": 2009
+  },
+  {
+    "Position": 16,
+    "Name": "Surviving Christmas",
+    "Year": 2004
+  },
+  {
+    "Position": 17,
+    "Name": "The Family Stone",
+    "Year": 2005
+  },
+  {
+    "Position": 18,
+    "Name": "The Nightmare Before Christmas",
+    "Year": 1993
+  },
+  {
+    "Position": 19,
+    "Name": "The Santa Clause",
+    "Year": 1994
+  },
+  {
+    "Position": 20,
+    "Name": "The Family Man",
+    "Year": 2000
+  },
+  {
+    "Position": 21,
+    "Name": "Tokyo Godfathers",
+    "Year": 2003
+  },
+  {
+    "Position": 22,
+    "Name": "Unaccompanied Minors",
+    "Year": 2006
+  },
+  {
+    "Position": 23,
+    "Name": "Love the Coopers",
+    "Year": 2015
+  },
+  {
+    "Position": 24,
+    "Name": "Nothing Like the Holidays",
+    "Year": 2008
+  },
+  {
+    "Position": 25,
+    "Name": "Noel",
+    "Year": 2004
+  },
+  {
+    "Position": 26,
+    "Name": "Happy Christmas",
+    "Year": 2014
+  },
+  {
+    "Position": 27,
+    "Name": "EXmas",
+    "Year": 2023
+  },
+  {
+    "Position": 28,
+    "Name": "Our Little Secret",
+    "Year": 2024
+  },
+  {
+    "Position": 29,
+    "Name": "Four Christmases",
+    "Year": 2008
+  },
+  {
+    "Position": 30,
+    "Name": "Serendipity",
+    "Year": 2001
+  },
+  {
+    "Position": 31,
+    "Name": "Sleepless in Seattle",
+    "Year": 1993
+  },
+  {
+    "Position": 1,
+    "Name": "Den of Thieves",
+    "Year": 2018
+  },
+  {
+    "Position": 2,
+    "Name": "Den of Thieves 2: Pantera",
+    "Year": 2025
+  },
+  {
+    "Position": 3,
+    "Name": "Forever My Girl",
+    "Year": 2018
+  },
+  {
+    "Position": 4,
+    "Name": "Shotgun Wedding",
+    "Year": 2022
+  },
+  {
+    "Position": 1,
     "Name": "The Fan",
     "Year": 1982
   },
@@ -8915,11 +9090,6 @@
     "Year": 1997
   },
   {
-    "Position": 1784,
-    "Name": "Sleepless in Seattle",
-    "Year": 1993
-  },
-  {
     "Position": 1785,
     "Name": "Seeking a Friend for the End of the World",
     "Year": 2012
@@ -9520,11 +9690,6 @@
     "Year": 2013
   },
   {
-    "Position": 1905,
-    "Name": "The Nightmare Before Christmas",
-    "Year": 1993
-  },
-  {
     "Position": 1906,
     "Name": "Twin Peaks",
     "Year": 1989
@@ -9893,11 +10058,6 @@
     "Position": 1979,
     "Name": "Cannibal Ferox",
     "Year": 1981
-  },
-  {
-    "Position": 1980,
-    "Name": "\"What's Up",
-    "Year": null
   },
   {
     "Position": 1981,
@@ -13290,19 +13450,9 @@
     "Year": 2005
   },
   {
-    "Position": 2659,
-    "Name": "A Christmas Carol",
-    "Year": 2009
-  },
-  {
     "Position": 2660,
     "Name": "Amour",
     "Year": 2012
-  },
-  {
-    "Position": 2661,
-    "Name": "It's a Wonderful Life",
-    "Year": 1946
   },
   {
     "Position": 2662,
@@ -15235,11 +15385,6 @@
     "Year": 1954
   },
   {
-    "Position": 3048,
-    "Name": "The Santa Clause",
-    "Year": 1994
-  },
-  {
     "Position": 3049,
     "Name": "Miss Congeniality 2: Armed and Fabulous",
     "Year": 2005
@@ -16455,11 +16600,6 @@
     "Year": 2008
   },
   {
-    "Position": 3292,
-    "Name": "\"Crouching Tiger",
-    "Year": null
-  },
-  {
     "Position": 3293,
     "Name": "Deep Blue Sea",
     "Year": 1999
@@ -17520,11 +17660,6 @@
     "Year": 2016
   },
   {
-    "Position": 3505,
-    "Name": "The Holiday",
-    "Year": 2006
-  },
-  {
     "Position": 3506,
     "Name": "The Invisible Man Returns",
     "Year": 1940
@@ -17863,11 +17998,6 @@
     "Position": 3573,
     "Name": "Every Thing Will Be Fine",
     "Year": 2015
-  },
-  {
-    "Position": 3574,
-    "Name": "The Family Stone",
-    "Year": 2005
   },
   {
     "Position": 3575,
@@ -19050,11 +19180,6 @@
     "Year": 1996
   },
   {
-    "Position": 3811,
-    "Name": "The Family Man",
-    "Year": 2000
-  },
-  {
     "Position": 3812,
     "Name": "Fantastic Four",
     "Year": 2015
@@ -20188,11 +20313,6 @@
     "Position": 4038,
     "Name": "Icarus",
     "Year": 2017
-  },
-  {
-    "Position": 4039,
-    "Name": "\"I",
-    "Year": null
   },
   {
     "Position": 4040,
@@ -21691,11 +21811,6 @@
   },
   {
     "Position": 4339,
-    "Name": "\"Oh",
-    "Year": null
-  },
-  {
-    "Position": 4340,
     "Name": "\"Oh",
     "Year": null
   },
@@ -23925,11 +24040,6 @@
     "Year": 1988
   },
   {
-    "Position": 4786,
-    "Name": "\"I",
-    "Year": null
-  },
-  {
     "Position": 4787,
     "Name": "Child's Play 3",
     "Year": 1991
@@ -25330,11 +25440,6 @@
     "Year": 1988
   },
   {
-    "Position": 5067,
-    "Name": "Aladdin",
-    "Year": 1992
-  },
-  {
     "Position": 5068,
     "Name": "The Little Prince and the Eight-Headed Dragon",
     "Year": 1963
@@ -25413,11 +25518,6 @@
     "Position": 5083,
     "Name": "White Girl",
     "Year": 2016
-  },
-  {
-    "Position": 5084,
-    "Name": "\"New York",
-    "Year": null
   },
   {
     "Position": 5085,
@@ -25653,11 +25753,6 @@
     "Position": 5131,
     "Name": "The Night They Raided Minsky's",
     "Year": 1968
-  },
-  {
-    "Position": 5132,
-    "Name": "\"Yours",
-    "Year": null
   },
   {
     "Position": 5133,
@@ -26970,11 +27065,6 @@
     "Year": 1978
   },
   {
-    "Position": 5395,
-    "Name": "\"My Son",
-    "Year": null
-  },
-  {
     "Position": 5396,
     "Name": "Long Live Robin Hood",
     "Year": 1971
@@ -28073,11 +28163,6 @@
     "Position": 5615,
     "Name": "Die Nibelungen: Siegfried",
     "Year": 1924
-  },
-  {
-    "Position": 5616,
-    "Name": "\"War and Peace",
-    "Year": null
   },
   {
     "Position": 5617,
@@ -31460,11 +31545,6 @@
     "Year": 2002
   },
   {
-    "Position": 6293,
-    "Name": "\"The Good",
-    "Year": null
-  },
-  {
     "Position": 6294,
     "Name": "Blonde in Black Leather",
     "Year": 1975
@@ -33100,11 +33180,6 @@
     "Year": 1965
   },
   {
-    "Position": 6621,
-    "Name": "\"Love",
-    "Year": null
-  },
-  {
     "Position": 6622,
     "Name": "Pride",
     "Year": 2014
@@ -33528,11 +33603,6 @@
     "Position": 6706,
     "Name": "WUSA",
     "Year": 1970
-  },
-  {
-    "Position": 6707,
-    "Name": "\"Murder",
-    "Year": null
   },
   {
     "Position": 6708,
@@ -34273,11 +34343,6 @@
     "Position": 6855,
     "Name": "Killer Workout",
     "Year": 1987
-  },
-  {
-    "Position": 6856,
-    "Name": "\"Silent Night",
-    "Year": null
   },
   {
     "Position": 6857,
@@ -35660,11 +35725,6 @@
     "Year": 2017
   },
   {
-    "Position": 7133,
-    "Name": "\"Batman: The Dark Knight Returns",
-    "Year": null
-  },
-  {
     "Position": 7134,
     "Name": "Batman: Assault on Arkham",
     "Year": 2014
@@ -36033,11 +36093,6 @@
     "Position": 7207,
     "Name": "Lost Boundaries",
     "Year": 1949
-  },
-  {
-    "Position": 7208,
-    "Name": "\"Hello",
-    "Year": null
   },
   {
     "Position": 7209,
@@ -36745,11 +36800,6 @@
     "Year": 1994
   },
   {
-    "Position": 7350,
-    "Name": "The Hunchback of Notre Dame",
-    "Year": 1996
-  },
-  {
     "Position": 7351,
     "Name": "Hercules",
     "Year": 1995
@@ -37073,11 +37123,6 @@
     "Position": 7415,
     "Name": "Assault on Wall Street",
     "Year": 2013
-  },
-  {
-    "Position": 7416,
-    "Name": "\"Rome",
-    "Year": null
   },
   {
     "Position": 7417,
@@ -38025,11 +38070,6 @@
     "Year": 2020
   },
   {
-    "Position": 7606,
-    "Name": "\"Hello",
-    "Year": null
-  },
-  {
     "Position": 7607,
     "Name": "Wash",
     "Year": 2019
@@ -38276,11 +38316,6 @@
   },
   {
     "Position": 7656,
-    "Name": "Dr. Jekyll and Mr. Hyde",
-    "Year": 1920
-  },
-  {
-    "Position": 7657,
     "Name": "Dr. Jekyll and Mr. Hyde",
     "Year": 1920
   },
@@ -40690,11 +40725,6 @@
     "Year": 2020
   },
   {
-    "Position": 8139,
-    "Name": "\"Love",
-    "Year": null
-  },
-  {
     "Position": 8140,
     "Name": "The Rhythm Section",
     "Year": 2020
@@ -42088,11 +42118,6 @@
     "Position": 8418,
     "Name": "Return of the Seven",
     "Year": 1966
-  },
-  {
-    "Position": 8419,
-    "Name": "\"I",
-    "Year": null
   },
   {
     "Position": 8420,
@@ -44240,11 +44265,6 @@
     "Year": 2020
   },
   {
-    "Position": 8849,
-    "Name": "\"Good Morning",
-    "Year": null
-  },
-  {
     "Position": 8850,
     "Name": "The Boy Next Door",
     "Year": 2015
@@ -44458,11 +44478,6 @@
     "Position": 8892,
     "Name": "The Worst Person in the World",
     "Year": 2021
-  },
-  {
-    "Position": 8893,
-    "Name": "\"The Good",
-    "Year": null
   },
   {
     "Position": 8894,
@@ -45645,11 +45660,6 @@
     "Year": 1974
   },
   {
-    "Position": 9130,
-    "Name": "\"I",
-    "Year": null
-  },
-  {
     "Position": 9131,
     "Name": "Augustus: The First Emperor",
     "Year": 2003
@@ -46445,11 +46455,6 @@
     "Year": 2022
   },
   {
-    "Position": 9290,
-    "Name": "\"Love",
-    "Year": null
-  },
-  {
     "Position": 9291,
     "Name": "Twentieth Century",
     "Year": 1934
@@ -46712,11 +46717,6 @@
   {
     "Position": 9343,
     "Name": "The Invitation",
-    "Year": 2022
-  },
-  {
-    "Position": 9344,
-    "Name": "Spirited",
     "Year": 2022
   },
   {
@@ -48465,11 +48465,6 @@
     "Year": 2007
   },
   {
-    "Position": 9694,
-    "Name": "\"Love",
-    "Year": null
-  },
-  {
     "Position": 9695,
     "Name": "Coming Home",
     "Year": 1978
@@ -48483,11 +48478,6 @@
     "Position": 9697,
     "Name": "The Rainmaker",
     "Year": 1997
-  },
-  {
-    "Position": 9698,
-    "Name": "Four Christmases",
-    "Year": 2008
   },
   {
     "Position": 9699,
@@ -50055,11 +50045,6 @@
     "Year": 2025
   },
   {
-    "Position": 10012,
-    "Name": "\"Oh",
-    "Year": null
-  },
-  {
     "Position": 10013,
     "Name": "One to One: John & Yoko",
     "Year": 2024
@@ -50795,11 +50780,6 @@
     "Year": 1961
   },
   {
-    "Position": 10160,
-    "Name": "\"The Long",
-    "Year": null
-  },
-  {
     "Position": 10161,
     "Name": "Edge of the City",
     "Year": 1957
@@ -51003,11 +50983,6 @@
     "Position": 10201,
     "Name": "Middle School: The Worst Years of My Life",
     "Year": 2016
-  },
-  {
-    "Position": 10202,
-    "Name": "The Best Christmas Pageant Ever",
-    "Year": 2024
   },
   {
     "Position": 10203,
@@ -51568,5 +51543,725 @@
     "Position": 10314,
     "Name": "Green Zone",
     "Year": 2010
+  },
+  {
+    "Position": 5,
+    "Name": "Back to the Future",
+    "Year": 1985
+  },
+  {
+    "Position": 46,
+    "Name": "American History X",
+    "Year": 1998
+  },
+  {
+    "Position": 67,
+    "Name": "Life Is Beautiful",
+    "Year": 1997
+  },
+  {
+    "Position": 102,
+    "Name": "The Pursuit of Happyness",
+    "Year": 2006
+  },
+  {
+    "Position": 115,
+    "Name": "Shrek",
+    "Year": 2001
+  },
+  {
+    "Position": 133,
+    "Name": "Dune: Part Two",
+    "Year": 2024
+  },
+  {
+    "Position": 139,
+    "Name": "The Usual Suspects",
+    "Year": 1995
+  },
+  {
+    "Position": 151,
+    "Name": "Life",
+    "Year": 1999
+  },
+  {
+    "Position": 162,
+    "Name": "Gladiator",
+    "Year": 2000
+  },
+  {
+    "Position": 164,
+    "Name": "The Intouchables",
+    "Year": 2011
+  },
+  {
+    "Position": 173,
+    "Name": "Shutter Island",
+    "Year": 2010
+  },
+  {
+    "Position": 176,
+    "Name": "Warrior",
+    "Year": 2011
+  },
+  {
+    "Position": 179,
+    "Name": "The Lives of Others",
+    "Year": 2006
+  },
+  {
+    "Position": 185,
+    "Name": "Sling Blade",
+    "Year": 1996
+  },
+  {
+    "Position": 194,
+    "Name": "Mission: Impossible",
+    "Year": 1996
+  },
+  {
+    "Position": 199,
+    "Name": "The Princess Diaries",
+    "Year": 2001
+  },
+  {
+    "Position": 210,
+    "Name": "Secrets & Lies",
+    "Year": 1996
+  },
+  {
+    "Position": 211,
+    "Name": "A Man and a Woman",
+    "Year": 1966
+  },
+  {
+    "Position": 214,
+    "Name": "A Taxi Driver",
+    "Year": 2017
+  },
+  {
+    "Position": 241,
+    "Name": "The Secret in Their Eyes",
+    "Year": 2009
+  },
+  {
+    "Position": 248,
+    "Name": "Snow White and the Seven Dwarfs",
+    "Year": 1937
+  },
+  {
+    "Position": 262,
+    "Name": "The Parent Trap",
+    "Year": 1998
+  },
+  {
+    "Position": 266,
+    "Name": "The Father",
+    "Year": 2020
+  },
+  {
+    "Position": 300,
+    "Name": "Soul",
+    "Year": 2020
+  },
+  {
+    "Position": 302,
+    "Name": "The Pianist",
+    "Year": 2002
+  },
+  {
+    "Position": 308,
+    "Name": "The Tale of The Princess Kaguya",
+    "Year": 2013
+  },
+  {
+    "Position": 311,
+    "Name": "Taste of Cherry",
+    "Year": 1997
+  },
+  {
+    "Position": 314,
+    "Name": "Life Is Sweet",
+    "Year": 1990
+  },
+  {
+    "Position": 321,
+    "Name": "Midnight Run",
+    "Year": 1988
+  },
+  {
+    "Position": 322,
+    "Name": "The Count of Monte Cristo",
+    "Year": 2002
+  },
+  {
+    "Position": 324,
+    "Name": "Only Yesterday",
+    "Year": 1991
+  },
+  {
+    "Position": 325,
+    "Name": "The Handmaiden",
+    "Year": 2016
+  },
+  {
+    "Position": 327,
+    "Name": "The Trial",
+    "Year": 1962
+  },
+  {
+    "Position": 328,
+    "Name": "The Salesman",
+    "Year": 2016
+  },
+  {
+    "Position": 340,
+    "Name": "Z",
+    "Year": 1969
+  },
+  {
+    "Position": 347,
+    "Name": "A Goofy Movie",
+    "Year": 1995
+  },
+  {
+    "Position": 351,
+    "Name": "Shall We Dance?",
+    "Year": 1996
+  },
+  {
+    "Position": 353,
+    "Name": "The Fast and the Furious",
+    "Year": 2001
+  },
+  {
+    "Position": 358,
+    "Name": "Society of the Snow",
+    "Year": 2023
+  },
+  {
+    "Position": 362,
+    "Name": "\"4 Months",
+    "Year": 3
+  },
+  {
+    "Position": 369,
+    "Name": "Lilya 4-ever",
+    "Year": 2002
+  },
+  {
+    "Position": 371,
+    "Name": "Yojimbo",
+    "Year": 1961
+  },
+  {
+    "Position": 373,
+    "Name": "Basic Instinct",
+    "Year": 1992
+  },
+  {
+    "Position": 374,
+    "Name": "Sing Sing",
+    "Year": 2023
+  },
+  {
+    "Position": 375,
+    "Name": "Volver",
+    "Year": 2006
+  },
+  {
+    "Position": 376,
+    "Name": "In the Heat of the Night",
+    "Year": 1967
+  },
+  {
+    "Position": 379,
+    "Name": "Das Boot",
+    "Year": 1981
+  },
+  {
+    "Position": 382,
+    "Name": "Picnic at Hanging Rock",
+    "Year": 1975
+  },
+  {
+    "Position": 388,
+    "Name": "Buffalo '66",
+    "Year": 1998
+  },
+  {
+    "Position": 390,
+    "Name": "Close",
+    "Year": 2022
+  },
+  {
+    "Position": 391,
+    "Name": "La Ciénaga",
+    "Year": 2001
+  },
+  {
+    "Position": 414,
+    "Name": "Central Station",
+    "Year": 1998
+  },
+  {
+    "Position": 429,
+    "Name": "Billy Elliot",
+    "Year": 2000
+  },
+  {
+    "Position": 430,
+    "Name": "The Talented Mr. Ripley",
+    "Year": 1999
+  },
+  {
+    "Position": 442,
+    "Name": "The Peanut Butter Falcon",
+    "Year": 2019
+  },
+  {
+    "Position": 452,
+    "Name": "Uptown Girls",
+    "Year": 2003
+  },
+  {
+    "Position": 455,
+    "Name": "Menace II Society",
+    "Year": 1993
+  },
+  {
+    "Position": 458,
+    "Name": "The Motorcycle Diaries",
+    "Year": 2004
+  },
+  {
+    "Position": 464,
+    "Name": "The Rules of the Game",
+    "Year": 1939
+  },
+  {
+    "Position": 467,
+    "Name": "The Game",
+    "Year": 1997
+  },
+  {
+    "Position": 477,
+    "Name": "The Chorus",
+    "Year": 2004
+  },
+  {
+    "Position": 483,
+    "Name": "The Karate Kid",
+    "Year": 1984
+  },
+  {
+    "Position": 488,
+    "Name": "The Sweet Hereafter",
+    "Year": 1997
+  },
+  {
+    "Position": 489,
+    "Name": "Purple Noon",
+    "Year": 1960
+  },
+  {
+    "Position": 494,
+    "Name": "The Second Mother",
+    "Year": 2015
+  },
+  {
+    "Position": 496,
+    "Name": "The Great Beauty",
+    "Year": 2013
+  },
+  {
+    "Position": 503,
+    "Name": "Witness for the Prosecution",
+    "Year": 1957
+  },
+  {
+    "Position": 509,
+    "Name": "Thesis",
+    "Year": 1996
+  },
+  {
+    "Position": 512,
+    "Name": "Guess Who's Coming to Dinner",
+    "Year": 1967
+  },
+  {
+    "Position": 515,
+    "Name": "Capernaum",
+    "Year": 2018
+  },
+  {
+    "Position": 516,
+    "Name": "Booksmart",
+    "Year": 2019
+  },
+  {
+    "Position": 517,
+    "Name": "Le Trou",
+    "Year": 1960
+  },
+  {
+    "Position": 523,
+    "Name": "My Life as a Zucchini",
+    "Year": 2016
+  },
+  {
+    "Position": 525,
+    "Name": "Fried Green Tomatoes",
+    "Year": 1991
+  },
+  {
+    "Position": 526,
+    "Name": "Michael Jackson's Thriller",
+    "Year": 1983
+  },
+  {
+    "Position": 532,
+    "Name": "Wild Tales",
+    "Year": 2014
+  },
+  {
+    "Position": 535,
+    "Name": "Women on the Verge of a Nervous Breakdown",
+    "Year": 1988
+  },
+  {
+    "Position": 538,
+    "Name": "The Color Purple",
+    "Year": 1985
+  },
+  {
+    "Position": 542,
+    "Name": "Seven Psychopaths",
+    "Year": 2012
+  },
+  {
+    "Position": 552,
+    "Name": "Where Is the Friend's House?",
+    "Year": 1987
+  },
+  {
+    "Position": 556,
+    "Name": "Brainstorm",
+    "Year": 2000
+  },
+  {
+    "Position": 562,
+    "Name": "Laura",
+    "Year": 1944
+  },
+  {
+    "Position": 577,
+    "Name": "Killers of the Flower Moon",
+    "Year": 2023
+  },
+  {
+    "Position": 579,
+    "Name": "Planet of the Apes",
+    "Year": 1968
+  },
+  {
+    "Position": 599,
+    "Name": "How to Make Millions Before Grandma Dies",
+    "Year": 2024
+  },
+  {
+    "Position": 606,
+    "Name": "To Be or Not to Be",
+    "Year": 1942
+  },
+  {
+    "Position": 610,
+    "Name": "Spellbound",
+    "Year": 1945
+  },
+  {
+    "Position": 623,
+    "Name": "Anatomy of a Fall",
+    "Year": 2023
+  },
+  {
+    "Position": 624,
+    "Name": "Last Year at Marienbad",
+    "Year": 1961
+  },
+  {
+    "Position": 626,
+    "Name": "The Secret Garden",
+    "Year": 1993
+  },
+  {
+    "Position": 629,
+    "Name": "Juno",
+    "Year": 2007
+  },
+  {
+    "Position": 631,
+    "Name": "A Dog's Will",
+    "Year": 2000
+  },
+  {
+    "Position": 639,
+    "Name": "A Brighter Summer Day",
+    "Year": 1991
+  },
+  {
+    "Position": 640,
+    "Name": "You've Got Mail",
+    "Year": 1998
+  },
+  {
+    "Position": 642,
+    "Name": "Cabaret",
+    "Year": 1972
+  },
+  {
+    "Position": 643,
+    "Name": "Sleeping Beauty",
+    "Year": 1959
+  },
+  {
+    "Position": 644,
+    "Name": "The Butterfly Effect",
+    "Year": 2004
+  },
+  {
+    "Position": 645,
+    "Name": "The Red Balloon",
+    "Year": 1956
+  },
+  {
+    "Position": 654,
+    "Name": "3 Idiots",
+    "Year": 2009
+  },
+  {
+    "Position": 655,
+    "Name": "Nine Queens",
+    "Year": 2000
+  },
+  {
+    "Position": 659,
+    "Name": "Muriel's Wedding",
+    "Year": 1994
+  },
+  {
+    "Position": 661,
+    "Name": "\"Good Bye",
+    "Year": null
+  },
+  {
+    "Position": 672,
+    "Name": "Look Back",
+    "Year": 2024
+  },
+  {
+    "Position": 673,
+    "Name": "The Hurt Locker",
+    "Year": 2008
+  },
+  {
+    "Position": 679,
+    "Name": "Running on Empty",
+    "Year": 1988
+  },
+  {
+    "Position": 684,
+    "Name": "The Official Story",
+    "Year": 1985
+  },
+  {
+    "Position": 696,
+    "Name": "The Green Ray",
+    "Year": 1986
+  },
+  {
+    "Position": 701,
+    "Name": "Philadelphia",
+    "Year": 1993
+  },
+  {
+    "Position": 710,
+    "Name": "Elite Squad",
+    "Year": 2007
+  },
+  {
+    "Position": 712,
+    "Name": "\"Lock",
+    "Year": null
+  },
+  {
+    "Position": 716,
+    "Name": "The Hidden Fortress",
+    "Year": 1958
+  },
+  {
+    "Position": 723,
+    "Name": "Two Women",
+    "Year": 1960
+  },
+  {
+    "Position": 732,
+    "Name": "The Commitments",
+    "Year": 1991
+  },
+  {
+    "Position": 735,
+    "Name": "A Little Romance",
+    "Year": 1979
+  },
+  {
+    "Position": 743,
+    "Name": "Practical Magic",
+    "Year": 1998
+  },
+  {
+    "Position": 748,
+    "Name": "Gaslight",
+    "Year": 1944
+  },
+  {
+    "Position": 749,
+    "Name": "Kirikou and the Sorceress",
+    "Year": 1998
+  },
+  {
+    "Position": 750,
+    "Name": "My Big Fat Greek Wedding",
+    "Year": 2002
+  },
+  {
+    "Position": 751,
+    "Name": "Tarzan",
+    "Year": 1999
+  },
+  {
+    "Position": 753,
+    "Name": "Dirty Harry",
+    "Year": 1971
+  },
+  {
+    "Position": 760,
+    "Name": "A Man Called Ove",
+    "Year": 2015
+  },
+  {
+    "Position": 762,
+    "Name": "Robot Dreams",
+    "Year": 2023
+  },
+  {
+    "Position": 763,
+    "Name": "The Shop Around the Corner",
+    "Year": 1940
+  },
+  {
+    "Position": 765,
+    "Name": "The Celebration",
+    "Year": 1998
+  },
+  {
+    "Position": 781,
+    "Name": "Coming to America",
+    "Year": 1988
+  },
+  {
+    "Position": 788,
+    "Name": "Sunset Boulevard",
+    "Year": 1950
+  },
+  {
+    "Position": 793,
+    "Name": "The Bucket List",
+    "Year": 2007
+  },
+  {
+    "Position": 1,
+    "Name": "The Sisterhood of the Traveling Pants",
+    "Year": 2005
+  },
+  {
+    "Position": 9,
+    "Name": "Aquamarine",
+    "Year": 2006
+  },
+  {
+    "Position": 4,
+    "Name": "The Dreamers",
+    "Year": 2003
+  },
+  {
+    "Position": 7,
+    "Name": "Christmas in August",
+    "Year": 1998
+  },
+  {
+    "Position": 11,
+    "Name": "Surrogates",
+    "Year": 2009
+  },
+  {
+    "Position": 14,
+    "Name": "Dream Lover",
+    "Year": 1994
+  },
+  {
+    "Position": 16,
+    "Name": "The Sweet East",
+    "Year": 2023
+  },
+  {
+    "Position": 18,
+    "Name": "Entergalactic",
+    "Year": 2022
+  },
+  {
+    "Position": 19,
+    "Name": "Last Breath",
+    "Year": 2025
+  },
+  {
+    "Position": 20,
+    "Name": "Us and Them",
+    "Year": 2018
+  },
+  {
+    "Position": 24,
+    "Name": "Avenues",
+    "Year": 2017
+  },
+  {
+    "Position": 27,
+    "Name": "Dinner in America",
+    "Year": 2020
+  },
+  {
+    "Position": 28,
+    "Name": "The Blackening",
+    "Year": 2022
+  },
+  {
+    "Position": 30,
+    "Name": "Young & Beautiful",
+    "Year": 2013
+  },
+  {
+    "Position": 31,
+    "Name": "American Girl",
+    "Year": 2021
+  },
+  {
+    "Position": 34,
+    "Name": "Barefoot",
+    "Year": 2014
+  },
+  {
+    "Position": 35,
+    "Name": "Whatever Works",
+    "Year": 2009
   }
 ]

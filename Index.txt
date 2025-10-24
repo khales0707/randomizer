@@ -47,7 +47,6 @@
       border: 2px solid #1db954;
     }
 
-    /* Recuadro común del header */
     .header-box {
       background: rgba(0,0,0,0.7);
       padding: 20px 30px;
@@ -107,6 +106,13 @@
       background: #1ed760;
       box-shadow: 0 0 10px rgba(29,185,84,0.7);
       transform: translateY(-2px);
+    }
+
+    /* 🔹 Contador de películas */
+    .contador {
+      font-size: 0.9em;
+      color: #aaa;
+      margin-top: 5px;
     }
     .card {
       margin: 30px auto; padding: 20px;
@@ -233,6 +239,9 @@
         <button onclick="buscarPelicula()">Buscar película</button>
         <button onclick="azar()">🎲 Película al Azar</button>
       </div>
+
+      <!-- 🔹 Contador de películas -->
+      <p id="contador" class="contador"></p>
     </div>
   </div>
 
@@ -256,6 +265,10 @@
       .then(data => {
         peliculas = data;
         console.log("Películas cargadas:", peliculas.length);
+
+        // 🔹 Mostrar contador en la interfaz
+        document.getElementById("contador").textContent =
+          `Películas cargadas: ${peliculas.length} (del #1 al #${peliculas.length})`;
       })
       .catch(err => console.error("Error cargando JSON:", err));
 
