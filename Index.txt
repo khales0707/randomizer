@@ -4,21 +4,21 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1db954">
   <meta charset="UTF-8">
-  <title>Randomizer by Mundoo.Cine</title>
+  <title>Movie Randomizer by Mundoo.Cine</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
     html, body {
-      height: 100%; 
+      height: 100%;
       min-height: 100vh;
-    }    
+    }
     body {
       font-family: 'Montserrat', sans-serif;
       background: url('FONDO.jpg') no-repeat center center fixed;
       background-size: cover;
       background-attachment: fixed;
-      background-color: #000;   
+      background-color: #000;
       color: #eee;
       margin: 0;
       padding: 0;
@@ -56,8 +56,6 @@
       margin: 0 auto;
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
       text-align: center;
-
-      /* Animación de entrada */
       opacity: 0;
       transform: translateY(20px);
       animation: aparecer 0.8s ease-out forwards;
@@ -90,11 +88,18 @@
       position: static;
     }
 
-    input, button {
-      padding: 10px 15px; font-size: 16px;
-      margin: 5px; border: none; border-radius: 5px;
+    input, button, select {
+      padding: 10px 15px;
+      font-size: 16px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
     }
-    input { background: rgba(255,255,255,0.1); color: #fff; }
+
+    input, select {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
 
     button {
       background: #1db954;
@@ -102,37 +107,62 @@
       cursor: pointer;
       transition: all 0.3s ease;
     }
+
     button:hover {
       background: #1ed760;
       box-shadow: 0 0 10px rgba(29,185,84,0.7);
       transform: translateY(-2px);
     }
 
-    /* 🔹 Contador de películas */
     .contador {
       font-size: 0.9em;
       color: #aaa;
       margin-top: 5px;
     }
     .card {
-      margin: 30px auto; padding: 20px;
+      margin: 30px auto;
+      padding: 20px;
       background: rgba(20,20,20,0.85);
-      border-radius: 12px; max-width: 900px;
+      border-radius: 12px;
+      max-width: 900px;
       border: 1px solid rgba(255,255,255,0.1);
-      display: flex; gap: 20px; text-align: left;
+      display: flex;
+      gap: 20px;
+      text-align: left;
     }
-    .poster { flex: 1; }
+
+    .poster {
+      flex: 1;
+    }
+
     .poster img {
-      width: 100%; border-radius: 8px;
+      width: 100%;
+      border-radius: 8px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.8);
       border: 2px solid rgba(255,255,255,0.1);
     }
-    .info { flex: 2; }
-    h2 { color: #ffcc00; margin-top: 0; }
-    .numero { font-size: 1.1em; color: #ccc; margin-bottom: 10px; }
-    .extra { font-size: 0.9em; color: #bbb; margin-top: 10px; }
 
-    /* Tipografía secundaria para sinopsis */
+    .info {
+      flex: 2;
+    }
+
+    h2 {
+      color: #ffcc00;
+      margin-top: 0;
+    }
+
+    .numero {
+      font-size: 1.1em;
+      color: #ccc;
+      margin-bottom: 10px;
+    }
+
+    .extra {
+      font-size: 0.9em;
+      color: #bbb;
+      margin-top: 10px;
+    }
+
     .info p {
       font-style: italic;
       color: #ddd;
@@ -140,29 +170,48 @@
     }
 
     .cast {
-      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
     }
-    .actor {
-      display: flex; align-items: center; gap: 10px;
-      background: rgba(255,255,255,0.05);
-      padding: 6px 10px; border-radius: 20px;
-    }
-    .actor img {
-      width: 80px; height: 80px;
-      border-radius: 50%; object-fit: cover;
-    }
-    .justwatch-btn {
-      display:inline-block; padding:10px 15px;
-      background:#ffcc00; color:#000; text-decoration:none;
-      border-radius:6px; font-weight:bold; margin-top:10px;
-    }
-    .justwatch-btn:hover { background:#ffd633; }
 
-    /* Ajustes para pantallas chicas */
+    .actor {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.05);
+      padding: 6px 10px;
+      border-radius: 20px;
+    }
+
+    .actor img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .justwatch-btn {
+      display: inline-block;
+      padding: 10px 15px;
+      background: #ffcc00;
+      color: #000;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .justwatch-btn:hover {
+      background: #ffd633;
+    }
+
     @media (max-width: 600px) {
       body {
         font-size: 14px;
         padding: 0 5px;
+        background-attachment: scroll;
       }
 
       .header-box {
@@ -181,6 +230,7 @@
       }
 
       .controls input,
+      .controls select,
       .controls button {
         width: 100%;
         font-size: 1em;
@@ -215,14 +265,18 @@
       }
     }
 
-    * { box-sizing: border-box; }
-    img { max-width: 100%; height: auto; }
-    html, body { width: 100%; overflow-x: hidden; }
+    * {
+      box-sizing: border-box;
+    }
 
-    @media (max-width: 600px) {
-      body {
-        background-attachment: scroll;
-      }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
     }
   </style>
 </head>
@@ -235,12 +289,34 @@
       <p class="firma">@mundoo.cine</p>
 
       <div class="controls">
+        <select id="genero">
+          <option value="">🎬 Todos los géneros</option>
+          <option value="28">Acción</option>
+          <option value="12">Aventura</option>
+          <option value="16">Animación</option>
+          <option value="35">Comedia</option>
+          <option value="80">Crimen</option>
+          <option value="99">Documental</option>
+          <option value="18">Drama</option>
+          <option value="10751">Familiar</option>
+          <option value="14">Fantasía</option>
+          <option value="36">Historia</option>
+          <option value="27">Terror</option>
+          <option value="10402">Música</option>
+          <option value="9648">Misterio</option>
+          <option value="10749">Romance</option>
+          <option value="878">Ciencia ficción</option>
+          <option value="10770">TV</option>
+          <option value="53">Suspenso</option>
+          <option value="10752">Guerra</option>
+          <option value="37">Western</option>
+        </select>
+
         <input type="number" id="numero" placeholder="Elegí un número">
         <button onclick="buscarPelicula()">Buscar película</button>
         <button onclick="azar()">🎲 Película al Azar</button>
       </div>
 
-      <!-- 🔹 Contador de películas -->
       <p id="contador" class="contador"></p>
     </div>
   </div>
@@ -251,7 +327,6 @@
     let peliculas = [];
     const API_KEY = "b9911fb46e0e11491607c279cce876a1";
 
-    // Enter para disparar búsqueda
     document.addEventListener("DOMContentLoaded", () => {
       const input = document.getElementById("numero");
       input.addEventListener("keydown", (e) => {
@@ -259,35 +334,40 @@
       });
     });
 
-    // Cargar automáticamente el JSON
     fetch("peliculas.json")
       .then(resp => resp.json())
       .then(data => {
         peliculas = data;
-        console.log("Películas cargadas:", peliculas.length);
-
-        // 🔹 Mostrar contador en la interfaz
         document.getElementById("contador").textContent =
           `Películas cargadas: ${peliculas.length} (del #1 al #${peliculas.length})`;
       })
       .catch(err => console.error("Error cargando JSON:", err));
 
-    // Buscar por número
     function buscarPelicula() {
       const numero = document.getElementById("numero").value;
       mostrarPelicula(numero);
     }
 
-    // Selección al azar
     function azar() {
-      if (peliculas.length === 0) { 
-        alert("Todavía no se cargaron películas"); 
-        return; 
+      if (peliculas.length === 0) {
+        alert("Todavía no se cargaron películas");
+        return;
       }
-      const randomIndex = Math.floor(Math.random() * peliculas.length);
-      mostrarPelicula(peliculas[randomIndex].Position);
-    }
 
+      const generoSeleccionado = document.getElementById("genero").value;
+
+      const filtradas = peliculas.filter(p => {
+        return generoSeleccionado === "" || p.genre_ids?.includes(parseInt(generoSeleccionado));
+      });
+
+      if (filtradas.length === 0) {
+        alert("No hay películas que coincidan con ese género");
+        return;
+      }
+
+      const randomIndex = Math.floor(Math.random() * filtradas.length);
+      mostrarPelicula(filtradas[randomIndex].Position);
+    }
     async function mostrarPelicula(numero) {
       const contenedor = document.getElementById("resultado");
       contenedor.innerHTML = "<div class='card'><div class='info'><p>Buscando…</p></div></div>";
@@ -310,7 +390,6 @@
 
         const movie = data.results[0];
 
-        // Detalles
         const detailsResp = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${API_KEY}&language=es-ES`);
         let details = await detailsResp.json();
         if (!details.overview) {
@@ -319,7 +398,6 @@
           if (detailsEn.overview) details.overview = detailsEn.overview;
         }
 
-        // Créditos
         const creditsResp = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${API_KEY}&language=es-ES`);
         const credits = await creditsResp.json();
 
@@ -328,7 +406,6 @@
         const actores = (credits.cast || []).slice(0,4);
         const generos = (details.genres || []).map(g => g.name).join(", ");
 
-        // País para JustWatch
         let country = "ar";
         const locale = navigator.language || "";
         if (locale.toLowerCase().includes("es-es")) country = "es";
@@ -340,7 +417,6 @@
         const tituloMostrar = (tituloOriginal !== tituloLocal) ? `${tituloOriginal} (${tituloLocal})` : tituloOriginal;
         const justwatchUrl = `https://www.justwatch.com/${country}/buscar?q=${encodeURIComponent(tituloOriginal)}`;
 
-        // Render final
         contenedor.innerHTML = `
           <div class="card">
             <div class="poster">${poster ? `<img src="${poster}" alt="${tituloOriginal}">` : ""}</div>
@@ -370,7 +446,6 @@
       }
     }
 
-    // Registrar Service Worker
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("service-worker.js")
         .then(() => console.log("Service Worker registrado"))
