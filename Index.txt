@@ -31,7 +31,7 @@
     }
     .header-box {
       background: rgba(0,0,0,0.7); padding: 20px 30px; border-radius: 12px;
-      display: block; max-width: 760px; margin: 0 auto;
+      display: block; max-width: 780px; margin: 0 auto;
       box-shadow: 0 0 10px rgba(0,0,0,0.3); text-align: center;
       opacity: 0; transform: translateY(20px);
       animation: aparecer 0.8s ease-out forwards;
@@ -161,6 +161,7 @@
         <!-- Acciones -->
         <div class="group">
           <button onclick="azarFiltrado()">🎲 Azar (con filtros)</button>
+          <button onclick="azarFiltrado({ mostrarVarias: true, cantidad: 5 })">🎲 Azar varias (5)</button>
           <button onclick="resetFiltros()">🧹 Borrar filtros</button>
         </div>
       </div>
@@ -226,8 +227,8 @@ async function azar() {
   }
 }
 
-// Película al azar con filtros (Discover) — con opción de mostrar varias
-async function azarFiltrado({ mostrarVarias = true, cantidad = 5 } = {}) {
+// Azar con filtros — con variedad real para varias
+async function azarFiltrado({ mostrarVarias = false, cantidad = 5 } = {}) {
   contenedor.innerHTML = "<div class='card'><div class='info'><p>Buscando con filtros…</p></div></div>";
 
   const genero = document.getElementById("genero").value;
@@ -246,7 +247,7 @@ async function azarFiltrado({ mostrarVarias = true, cantidad = 5 } = {}) {
   if (proveedor) url += `&with_watch_providers=${proveedor}&watch_region=AR`;
   if (!isNaN(rating) && rating > 0) url += `&vote_average.gte=${rating}`;
 
-  // Actores y directores: convertir nombre a ID
+  // Actores / Directores → IDs
   if (actor) {
     const actorId = await buscarPersonaId(actor);
     if (actorId) url += `&with_cast=${actorId}`;
@@ -257,7 +258,7 @@ async function azarFiltrado({ mostrarVarias = true, cantidad = 5 } = {}) {
   }
 
   try {
-    // Arrancamos con la primera página para conocer total_pages
+    // Primero: conocer total_pages
     const resp = await fetch(url + "&page=1");
     const data = await resp.json();
     if (!data.results || data.results.length === 0) {
@@ -265,19 +266,8 @@ async function azarFiltrado({ mostrarVarias = true, cantidad = 5 } = {}) {
       return;
     }
 
-    // Si el usuario pidió varias, mostramos directamente los primeros N resultados
-    if (mostrarVarias) {
-      const lista = data.results.slice(0, cantidad);
-      contenedor.innerHTML = `<div class="grid">
-        ${lista.map(item => miniCard(item)).join("")}
-      </div>`;
-      // Añadimos click para abrir ficha completa
-      lista.forEach(item => attachMiniCardClick(item.id));
-      return;
-    }
-
-    // Si es solo una al azar, sorteamos página y película
     const totalPages = Math.min(data.total_pages, 50);
+    // Elegimos una página aleatoria SIEMPRE para evitar repetir
     const randomPage = Math.floor(Math.random() * totalPages) + 1;
     const resp2 = await fetch(url + `&page=${randomPage}`);
     const data2 = await resp2.json();
@@ -285,6 +275,24 @@ async function azarFiltrado({ mostrarVarias = true, cantidad = 5 } = {}) {
       contenedor.innerHTML = "<div class='card'><div class='info'><p>No encontré nada en esa página.</p></div></div>";
       return;
     }
+
+    if (mostrarVarias) {
+      // Mezclamos la página y tomamos N distintos
+      const shuffled = data2.results
+        .map(r => ({ r, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(x => x.r);
+      const lista = shuffled.slice(0, cantidad);
+
+      contenedor.innerHTML = `<div class="grid">
+        ${lista.map(item => miniCard(item)).join("")}
+      </div>`;
+
+      lista.forEach(item => attachMiniCardClick(item.id));
+      return;
+    }
+
+    // Solo una al azar
     const randomMovie = data2.results[Math.floor(Math.random() * data2.results.length)];
     mostrarPelicula(randomMovie.id);
   } catch (e) {
@@ -293,7 +301,7 @@ async function azarFiltrado({ mostrarVarias = true, cantidad = 5 } = {}) {
   }
 }
 
-// Helper: mini-card HTML para listados múltiples
+// Mini-card HTML
 function miniCard(item) {
   const poster = item.poster_path ? `https://image.tmdb.org/t/p/w300${item.poster_path}` : "";
   const title = item.title || item.original_title || "Sin título";
@@ -308,13 +316,13 @@ function miniCard(item) {
   `;
 }
 
-// Asociar evento a mini-cards
+// Click para abrir ficha desde mini-cards
 function attachMiniCardClick(id) {
   const btn = document.querySelector(`.open-btn[data-id="${id}"]`);
   if (btn) btn.addEventListener("click", () => mostrarPelicula(id));
 }
 
-// Buscar ID de persona (actor/director)
+// ID de persona (actor/director)
 async function buscarPersonaId(nombre) {
   try {
     const resp = await fetch(`https://api.themoviedb.org/3/search/person?api_key=${API_KEY}&language=es-MX&query=${encodeURIComponent(nombre)}`);
@@ -361,7 +369,6 @@ async function mostrarPelicula(movieId) {
       ? `<a href="https://www.imdb.com/title/${details.imdb_id}" target="_blank" style="color:#1db954;">(IMDb)</a>` 
       : "";
 
-    // Base de la ficha
     contenedor.innerHTML = `
       <div class="card">
         <div class="poster">${poster ? `<img src="${poster}" alt="${tituloOriginal}">` : ""}</div>
@@ -390,11 +397,13 @@ async function mostrarPelicula(movieId) {
       </div>
     `;
 
-    // Si pertenece a una colección (saga), mostrar 3 pelis de la saga
+    // Sagas: mostrar 3 títulos de la colección si aplica
     if (details.belongs_to_collection?.id) {
       const colResp = await fetch(`https://api.themoviedb.org/3/collection/${details.belongs_to_collection.id}?api_key=${API_KEY}&language=es-MX`);
       const colData = await colResp.json();
-      const sagaParts = (colData.parts || []).sort((a,b) => (a.release_date||"").localeCompare(b.release_date||"")).slice(0,3);
+      const sagaParts = (colData.parts || [])
+        .sort((a,b) => (a.release_date||"").localeCompare(b.release_date||""))
+        .slice(0,3);
 
       if (sagaParts.length) {
         const sagaHtml = `
