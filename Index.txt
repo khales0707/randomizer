@@ -31,7 +31,7 @@
     }
     .header-box {
       background: rgba(0,0,0,0.7); padding: 20px 30px; border-radius: 12px;
-      display: block; max-width: 650px; margin: 0 auto;
+      display: block; max-width: 700px; margin: 0 auto;
       box-shadow: 0 0 10px rgba(0,0,0,0.3); text-align: center;
       opacity: 0; transform: translateY(20px);
       animation: aparecer 0.8s ease-out forwards;
@@ -85,24 +85,56 @@
 
       <!-- 🎛️ Filtros para azar -->
       <div class="controls">
+        <!-- Género -->
         <label for="genero">Género:</label>
         <select id="genero">
           <option value="">Cualquiera</option>
           <option value="28">Acción</option>
-          <option value="35">Comedia</option>
-          <option value="18">Drama</option>
-          <option value="27">Terror</option>
-          <option value="10749">Romance</option>
+          <option value="12">Aventura</option>
           <option value="16">Animación</option>
+          <option value="35">Comedia</option>
+          <option value="80">Crimen</option>
+          <option value="99">Documental</option>
+          <option value="18">Drama</option>
+          <option value="10751">Familia</option>
+          <option value="14">Fantasía</option>
+          <option value="36">Historia</option>
+          <option value="27">Terror</option>
+          <option value="10402">Música</option>
+          <option value="9648">Misterio</option>
+          <option value="10749">Romance</option>
           <option value="878">Ciencia Ficción</option>
+          <option value="10770">Película de TV</option>
           <option value="53">Thriller</option>
+          <option value="10752">Bélica</option>
+          <option value="37">Western</option>
         </select>
 
+        <!-- Rango de años -->
         <label for="anioDesde">Año desde:</label>
         <input type="number" id="anioDesde" placeholder="1990" min="1900" max="2025">
 
         <label for="anioHasta">Año hasta:</label>
         <input type="number" id="anioHasta" placeholder="2005" min="1900" max="2025">
+
+        <!-- Plataforma -->
+        <label for="proveedor">Plataforma:</label>
+        <select id="proveedor">
+          <option value="">Cualquiera</option>
+          <option value="8">Netflix</option>
+          <option value="337">Disney+</option>
+          <option value="119">Amazon Prime Video</option>
+          <option value="384">HBO Max</option>
+          <option value="350">Apple TV+</option>
+          <option value="531">Paramount+</option>
+        </select>
+
+        <!-- Actor / Director -->
+        <label for="actor">Actor:</label>
+        <input type="text" id="actor" placeholder="Nombre del actor">
+
+        <label for="director">Director:</label>
+        <input type="text" id="director" placeholder="Nombre del director">
 
         <button onclick="azarFiltrado()">🎲 Película al Azar (con filtros)</button>
       </div>
@@ -163,12 +195,26 @@ async function azarFiltrado() {
   const genero = document.getElementById("genero").value;
   const anioDesde = document.getElementById("anioDesde").value;
   const anioHasta = document.getElementById("anioHasta").value;
+  const proveedor = document.getElementById("proveedor").value;
+  const actor = document.getElementById("actor").value.trim();
+  const director = document.getElementById("director").value.trim();
 
   let url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=es-MX&include_adult=false`;
 
   if (genero) url += `&with_genres=${genero}`;
   if (anioDesde) url += `&primary_release_date.gte=${anioDesde}-01-01`;
   if (anioHasta) url += `&primary_release_date.lte=${anioHasta}-12-31`;
+  if (proveedor) url += `&with_watch_providers=${proveedor}&watch_region=AR`;
+
+  // Para actores y directores necesitamos sus IDs
+  if (actor) {
+    const actorId = await buscarPersonaId(actor);
+    if (actorId) url += `&with_cast=${actorId}`;
+  }
+  if (director) {
+    const directorId = await buscarPersonaId(director);
+    if (directorId) url += `&with_crew=${directorId}`;
+  }
 
   try {
     const resp = await fetch(url + "&page=1");
@@ -194,6 +240,20 @@ async function azarFiltrado() {
     console.error(e);
     contenedor.innerHTML = "<div class='card'><div class='info'><p>Error al buscar con filtros.</p></div></div>";
   }
+}
+
+// Buscar ID de persona (actor/director)
+async function buscarPersonaId(nombre) {
+  try {
+    const resp = await fetch(`https://api.themoviedb.org/3/search/person?api_key=${API_KEY}&language=es-MX&query=${encodeURIComponent(nombre)}`);
+    const data = await resp.json();
+    if (data.results && data.results.length > 0) {
+      return data.results[0].id;
+    }
+  } catch (e) {
+    console.error("Error buscando persona:", e);
+  }
+  return null;
 }
 
 // Mostrar detalles + plataformas
@@ -252,31 +312,4 @@ async function mostrarPelicula(movieId) {
           <div class="providers">
             ${providers.length ? providers.map(p => `
               <img src="https://image.tmdb.org/t/p/w45${p.logo_path}" alt="${p.provider_name}" title="${p.provider_name}">
-            `).join("") : "<em>No disponible en plataformas conocidas para Argentina.</em>"}
-          </div>
-        </div>
-      </div>
-    `;
-  } catch (e) {
-    console.error(e);
-    contenedor.innerHTML = "<div class='card'><div class='info'><p>Error al mostrar la película.</p></div></div>";
-  }
-}
-
-// Enter para disparar búsqueda
-document.addEventListener("DOMContentLoaded", () => {
-  const input = document.getElementById("busqueda");
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") buscarPelicula();
-  });
-});
-
-// Service Worker (si lo tenés)
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js")
-    .then(() => console.log("Service Worker registrado"))
-    .catch(err => console.error("Error registrando SW:", err));
-}
-</script>
-</body>
-</html>
+            `
