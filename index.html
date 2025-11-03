@@ -31,7 +31,7 @@
     }
     .header-box {
       background: rgba(0,0,0,0.7); padding: 20px 30px; border-radius: 12px;
-      display: block; max-width: 500px; margin: 0 auto;
+      display: block; max-width: 600px; margin: 0 auto;
       box-shadow: 0 0 10px rgba(0,0,0,0.3); text-align: center;
       opacity: 0; transform: translateY(20px);
       animation: aparecer 0.8s ease-out forwards;
@@ -40,8 +40,8 @@
     .header-box h1 { font-size: 2.2em; margin: 0; color: #1db954; letter-spacing: 2px; }
     .header-box .firma { font-size: 1em; color: #ccc; margin-top: 5px; }
     .controls { padding: 15px; }
-    input, button { padding: 10px 15px; font-size: 16px; margin: 5px; border: none; border-radius: 5px; }
-    input { background: rgba(255,255,255,0.1); color: #fff; }
+    input, select, button { padding: 10px 15px; font-size: 16px; margin: 5px; border: none; border-radius: 5px; }
+    input, select { background: rgba(255,255,255,0.1); color: #fff; }
     button { background: #1db954; color: #fff; cursor: pointer; transition: all 0.3s ease; }
     button:hover { background: #1ed760; box-shadow: 0 0 10px rgba(29,185,84,0.7); transform: translateY(-2px); }
     .card {
@@ -58,8 +58,6 @@
     .cast { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
     .actor { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 20px; }
     .actor img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; }
-    .providers { margin-top: 16px; font-size: 0.95em; color: #ccc; }
-    .providers img { height: 40px; border-radius: 6px; background: #fff; padding: 3px; margin: 5px; vertical-align: middle; }
     @media (max-width: 600px) {
       .card { flex-direction: column; padding: 15px; gap: 15px; }
       .poster img { max-width: 250px; margin: 0 auto; display: block; }
@@ -78,7 +76,31 @@
       <div class="controls">
         <input type="text" id="busqueda" placeholder="Escribí un título de película">
         <button onclick="buscarPelicula()">Buscar película</button>
-        <button onclick="azar()">🎲 Película al Azar</button>
+        <button onclick="azar()">🎲 Película al Azar (sin filtros)</button>
+      </div>
+
+      <!-- 🔎 NUEVOS FILTROS -->
+      <div class="controls">
+        <label for="genero">Género:</label>
+        <select id="genero">
+          <option value="">Cualquiera</option>
+          <option value="28">Acción</option>
+          <option value="35">Comedia</option>
+          <option value="18">Drama</option>
+          <option value="27">Terror</option>
+          <option value="10749">Romance</option>
+          <option value="16">Animación</option>
+          <option value="878">Ciencia Ficción</option>
+          <option value="53">Thriller</option>
+        </select>
+
+        <label for="anioDesde">Año desde:</label>
+        <input type="number" id="anioDesde" placeholder="1990" min="1900" max="2025">
+
+        <label for="anioHasta">Año hasta:</label>
+        <input type="number" id="anioHasta" placeholder="2005" min="1900" max="2025">
+
+        <button onclick="azarFiltrado()">🎲 Película al Azar (con filtros)</button>
       </div>
     </div>
   </div>
@@ -110,7 +132,7 @@ async function buscarPelicula() {
   }
 }
 
-// Película al azar
+// Película al azar (sin filtros)
 async function azar() {
   contenedor.innerHTML = "<div class='card'><div class='info'><p>Buscando al azar…</p></div></div>";
   try {
@@ -129,10 +151,50 @@ async function azar() {
   }
 }
 
+// Película al azar con filtros (Discover)
+async function azarFiltrado() {
+  contenedor.innerHTML = "<div class='card'><div class='info'><p>Buscando con filtros…</p></div></div>";
+
+  const genero = document.getElementById("genero").value;
+  const anioDesde = document.getElementById("anioDesde").value;
+  const anioHasta = document.getElementById("anioHasta").value;
+
+  let url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=es-MX&include_adult=false`;
+
+  if (genero) url += `&with_genres=${genero}`;
+  if (anioDesde) url += `&primary_release_date.gte=${anioDesde}-01-01`;
+  if (anioHasta) url += `&primary_release_date.lte=${anioHasta}-12-31`;
+
+  try {
+    // Primero pedimos la primera página para saber cuántas hay
+    const resp = await fetch(url + "&page=1");
+    const data = await resp.json();
+    if (!data.results || data.results.length === 0) {
+      contenedor.innerHTML = "<div class='card'><div class='info'><p>No encontré nada con esos filtros.</p></div></div>";
+      return;
+    }
+
+    const totalPages = Math.min(data.total_pages, 50); // límite de TMDb
+    const randomPage = Math.floor(Math.random() * totalPages) + 1;
+
+    const resp2 = await fetch(url + `&page=${randomPage}`);
+    const data2 = await resp2.json();
+    if (!data2.results || data2.results.length === 0) {
+      contenedor.innerHTML = "<div class='card'><div class='info'><p>No encontré nada en esa página.</p></div></div>";
+      return;
+    }
+
+    const randomMovie = data2.results[Math.floor(Math.random() * data2.results.length)];
+    mostrarPelicula(randomMovie.id);
+  } catch (e) {
+    console.error(e);
+    contenedor.innerHTML = "<div class='card'><div class='info'><p>Error al buscar con filtros.</p></div></div>";
+  }
+}
+
 // Mostrar detalles
 async function mostrarPelicula(movieId) {
   try {
-    // Detalles TMDb
     const detailsResp = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=es-MX`);
     let details = await detailsResp.json();
     if (!details.overview) {
@@ -141,7 +203,6 @@ async function mostrarPelicula(movieId) {
       if (detailsEn.overview) details.overview = detailsEn.overview;
     }
 
-    // Créditos TMDb
     const creditsResp = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${API_KEY}&language=es-MX`);
     const credits = await creditsResp.json();
 
