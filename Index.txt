@@ -58,10 +58,8 @@
     .cast { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
     .actor { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 20px; }
     .actor img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; }
-    .providers { margin-top: 10px; font-size: 0.95em; color: #ccc; }
-    .providers img {
-      height: 40px; border-radius: 6px; background: #fff; padding: 3px; margin: 5px; vertical-align: middle;
-    }
+    .providers { margin-top: 16px; font-size: 0.95em; color: #ccc; }
+    .providers img { height: 40px; border-radius: 6px; background: #fff; padding: 3px; margin: 5px; vertical-align: middle; }
     @media (max-width: 600px) {
       .card { flex-direction: column; padding: 15px; gap: 15px; }
       .poster img { max-width: 250px; margin: 0 auto; display: block; }
@@ -78,7 +76,6 @@
       <p class="firma">@mundoo.cine</p>
 
       <div class="controls">
-        <!-- 🔹 Ahora el input es de texto para buscar por título -->
         <input type="text" id="busqueda" placeholder="Escribí un título de película">
         <button onclick="buscarPelicula()">Buscar película</button>
         <button onclick="azar()">🎲 Película al Azar</button>
@@ -88,7 +85,7 @@
 
   <div id="resultado"></div>
 <script>
-const API_KEY = "b9911fb46e0e11491607c279cce876a1"; // tu API de TMDb
+const API_KEY = "b9911fb46e0e11491607c279cce876a1"; // TMDb
 const contenedor = document.getElementById("resultado");
 
 // Buscar por título
@@ -117,7 +114,7 @@ async function buscarPelicula() {
 async function azar() {
   contenedor.innerHTML = "<div class='card'><div class='info'><p>Buscando al azar…</p></div></div>";
   try {
-    const randomPage = Math.floor(Math.random() * 50) + 1; // 50 páginas de populares
+    const randomPage = Math.floor(Math.random() * 50) + 1;
     const resp = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=es-MX&page=${randomPage}`);
     const data = await resp.json();
     if (!data.results || data.results.length === 0) {
@@ -132,10 +129,10 @@ async function azar() {
   }
 }
 
-// Mostrar detalles de una película
+// Mostrar detalles
 async function mostrarPelicula(movieId) {
   try {
-    // Detalles
+    // Detalles TMDb
     const detailsResp = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=es-MX`);
     let details = await detailsResp.json();
     if (!details.overview) {
@@ -144,35 +141,36 @@ async function mostrarPelicula(movieId) {
       if (detailsEn.overview) details.overview = detailsEn.overview;
     }
 
-    // Créditos
+    // Créditos TMDb
     const creditsResp = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${API_KEY}&language=es-MX`);
     const credits = await creditsResp.json();
-
-    // Proveedores (plataformas) — fijo Argentina
-    const providersResp = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=${API_KEY}`);
-    const providersData = await providersResp.json();
-    const providers = providersData.results["AR"]?.flatrate || [];
 
     const poster = details.poster_path ? `https://image.tmdb.org/t/p/w300${details.poster_path}` : "";
     const director = credits.crew?.find(p => p.job === "Director");
     const actores = (credits.cast || []).slice(0,4);
     const generos = (details.genres || []).map(g => g.name).join(", ");
 
-    // Títulos
     const tituloOriginal = details.original_title || "";
     const tituloLocal = details.title || "";
-    const subtitulo = (tituloOriginal !== tituloLocal) ? `<p style="color:#ccc; font-size:0.9em;">${tituloLocal}</p>` : "";
+    const subtitulo = (tituloOriginal !== tituloLocal) 
+      ? `<span style="color:#ffcc00; font-size:1em;">(${tituloLocal})</span>` 
+      : "";
+
+    const rating = details.vote_average ? details.vote_average.toFixed(1) : "N/D";
+    const imdbLink = details.imdb_id 
+      ? `<a href="https://www.imdb.com/title/${details.imdb_id}" target="_blank" style="color:#1db954;">(IMDb)</a>` 
+      : "";
 
     contenedor.innerHTML = `
       <div class="card">
         <div class="poster">${poster ? `<img src="${poster}" alt="${tituloOriginal}">` : ""}</div>
         <div class="info">
-          <h2>${tituloOriginal} (${details.release_date?.slice(0,4) || ""})</h2>
-          ${subtitulo}
+          <h2>${tituloOriginal} ${subtitulo} (${details.release_date?.slice(0,4) || ""})</h2>
           <p>${details.overview || "Sin sinopsis disponible."}</p>
           <div class="extra">
             <strong>Géneros:</strong> ${generos || "N/D"}<br>
             <strong>Director:</strong> ${director ? director.name : "N/D"}<br>
+            <strong>Rating:</strong> ⭐ ${rating}/10 ${imdbLink}
           </div>
           <div class="cast">
             ${actores.map(a => `
@@ -181,15 +179,6 @@ async function mostrarPelicula(movieId) {
                 <span>${a.name}</span>
               </div>
             `).join("")}
-          </div>
-          <div class="providers">
-            ${providers.length > 0 
-              ? "Disponible en:<br>" + providers.map(p => `
-                  <img src="https://image.tmdb.org/t/p/w45${p.logo_path}" 
-                       alt="${p.provider_name}" 
-                       title="${p.provider_name}">
-                `).join("")
-              : "No disponible en plataformas conocidas."}
           </div>
         </div>
       </div>
@@ -208,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Registrar Service Worker
+// Service Worker (si lo tenés)
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js")
     .then(() => console.log("Service Worker registrado"))
