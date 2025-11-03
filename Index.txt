@@ -255,7 +255,6 @@ async function buscarPersonaId(nombre) {
   }
   return null;
 }
-
 // Mostrar detalles + plataformas
 async function mostrarPelicula(movieId) {
   try {
@@ -312,4 +311,31 @@ async function mostrarPelicula(movieId) {
           <div class="providers">
             ${providers.length ? providers.map(p => `
               <img src="https://image.tmdb.org/t/p/w45${p.logo_path}" alt="${p.provider_name}" title="${p.provider_name}">
-            `
+            `).join("") : "<em>No disponible en plataformas conocidas para Argentina.</em>"}
+          </div>
+        </div>
+      </div>
+    `;
+  } catch (e) {
+    console.error(e);
+    contenedor.innerHTML = "<div class='card'><div class='info'><p>Error al mostrar la película.</p></div></div>";
+  }
+}
+
+// Enter para disparar búsqueda
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("busqueda");
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") buscarPelicula();
+  });
+});
+
+// Service Worker (si lo tenés)
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+    .then(() => console.log("Service Worker registrado"))
+    .catch(err => console.error("Error registrando SW:", err));
+}
+</script>
+</body>
+</html>
