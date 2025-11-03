@@ -31,7 +31,7 @@
     }
     .header-box {
       background: rgba(0,0,0,0.7); padding: 20px 30px; border-radius: 12px;
-      display: block; max-width: 600px; margin: 0 auto;
+      display: block; max-width: 650px; margin: 0 auto;
       box-shadow: 0 0 10px rgba(0,0,0,0.3); text-align: center;
       opacity: 0; transform: translateY(20px);
       animation: aparecer 0.8s ease-out forwards;
@@ -44,6 +44,8 @@
     input, select { background: rgba(255,255,255,0.1); color: #fff; }
     button { background: #1db954; color: #fff; cursor: pointer; transition: all 0.3s ease; }
     button:hover { background: #1ed760; box-shadow: 0 0 10px rgba(29,185,84,0.7); transform: translateY(-2px); }
+    select { background: #222; color: #fff; }
+    select option { background: #222; color: #fff; }
     .card {
       margin: 30px auto; padding: 20px; background: rgba(20,20,20,0.85);
       border-radius: 12px; max-width: 900px; border: 1px solid rgba(255,255,255,0.1);
@@ -58,6 +60,7 @@
     .cast { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
     .actor { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 20px; }
     .actor img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; }
+    .providers img { height: 40px; border-radius: 6px; background: #fff; padding: 3px; margin: 5px; vertical-align: middle; }
     @media (max-width: 600px) {
       .card { flex-direction: column; padding: 15px; gap: 15px; }
       .poster img { max-width: 250px; margin: 0 auto; display: block; }
@@ -73,13 +76,14 @@
       <h1>Movie Randomizer</h1>
       <p class="firma">@mundoo.cine</p>
 
+      <!-- 🔍 Búsqueda por título -->
       <div class="controls">
         <input type="text" id="busqueda" placeholder="Escribí un título de película">
         <button onclick="buscarPelicula()">Buscar película</button>
         <button onclick="azar()">🎲 Película al Azar (sin filtros)</button>
       </div>
 
-      <!-- 🔎 NUEVOS FILTROS -->
+      <!-- 🎛️ Filtros para azar -->
       <div class="controls">
         <label for="genero">Género:</label>
         <select id="genero">
@@ -105,9 +109,10 @@
     </div>
   </div>
 
+  <!-- Contenedor de resultados -->
   <div id="resultado"></div>
 <script>
-const API_KEY = "b9911fb46e0e11491607c279cce876a1"; // TMDb
+const API_KEY = "b9911fb46e0e11491607c279cce876a1"; 
 const contenedor = document.getElementById("resultado");
 
 // Buscar por título
@@ -166,7 +171,6 @@ async function azarFiltrado() {
   if (anioHasta) url += `&primary_release_date.lte=${anioHasta}-12-31`;
 
   try {
-    // Primero pedimos la primera página para saber cuántas hay
     const resp = await fetch(url + "&page=1");
     const data = await resp.json();
     if (!data.results || data.results.length === 0) {
@@ -174,7 +178,7 @@ async function azarFiltrado() {
       return;
     }
 
-    const totalPages = Math.min(data.total_pages, 50); // límite de TMDb
+    const totalPages = Math.min(data.total_pages, 50);
     const randomPage = Math.floor(Math.random() * totalPages) + 1;
 
     const resp2 = await fetch(url + `&page=${randomPage}`);
@@ -192,7 +196,7 @@ async function azarFiltrado() {
   }
 }
 
-// Mostrar detalles
+// Mostrar detalles + plataformas
 async function mostrarPelicula(movieId) {
   try {
     const detailsResp = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=es-MX`);
@@ -205,6 +209,10 @@ async function mostrarPelicula(movieId) {
 
     const creditsResp = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${API_KEY}&language=es-MX`);
     const credits = await creditsResp.json();
+
+    const providersResp = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=${API_KEY}`);
+    const providersData = await providersResp.json();
+    const providers = providersData.results?.AR?.flatrate || [];
 
     const poster = details.poster_path ? `https://image.tmdb.org/t/p/w300${details.poster_path}` : "";
     const director = credits.crew?.find(p => p.job === "Director");
@@ -240,6 +248,11 @@ async function mostrarPelicula(movieId) {
                 <span>${a.name}</span>
               </div>
             `).join("")}
+          </div>
+          <div class="providers">
+            ${providers.length ? providers.map(p => `
+              <img src="https://image.tmdb.org/t/p/w45${p.logo_path}" alt="${p.provider_name}" title="${p.provider_name}">
+            `).join("") : "<em>No disponible en plataformas conocidas para Argentina.</em>"}
           </div>
         </div>
       </div>
