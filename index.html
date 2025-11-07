@@ -182,6 +182,13 @@
     }
 
     @media (max-width: 700px) {
+      .group {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .filtro {
+        width: 100%;
+      }
       .card {
         flex-direction: column;
         padding: 15px;
@@ -309,7 +316,6 @@
 const API_KEY = "b9911fb46e0e11491607c279cce876a1"; 
 const contenedor = document.getElementById("resultado");
 
-// 🧹 Reset de filtros
 function resetFiltros() {
   document.getElementById("genero").value = "";
   document.getElementById("anioDesde").value = "";
@@ -321,18 +327,14 @@ function resetFiltros() {
   document.getElementById("ratingValue").innerText = "0";
 }
 
-// 🔍 Buscar por título
 async function buscarPelicula() {
   const query = document.getElementById("busqueda").value.trim();
-  if (!query) {
-    alert("Escribí un título para buscar");
-    return;
-  }
+  if (!query) return alert("Escribí un título para buscar");
   contenedor.innerHTML = "<div class='card'><div class='info'><p>Buscando…</p></div></div>";
   try {
     const resp = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=es-MX&query=${encodeURIComponent(query)}`);
     const data = await resp.json();
-    if (!data.results || data.results.length === 0) {
+    if (!data.results?.length) {
       contenedor.innerHTML = `<div class='card'><div class='info'><p>No encontré "${query}".</p></div></div>`;
       return;
     }
@@ -343,14 +345,13 @@ async function buscarPelicula() {
   }
 }
 
-// 🎲 Azar sin filtros
 async function azar() {
   contenedor.innerHTML = "<div class='card'><div class='info'><p>Buscando al azar…</p></div></div>";
   try {
     const randomPage = Math.floor(Math.random() * 50) + 1;
     const resp = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=es-MX&page=${randomPage}`);
     const data = await resp.json();
-    if (!data.results || data.results.length === 0) {
+    if (!data.results?.length) {
       contenedor.innerHTML = "<div class='card'><div class='info'><p>No encontré nada.</p></div></div>";
       return;
     }
@@ -362,7 +363,6 @@ async function azar() {
   }
 }
 
-// 🎛️ Azar con filtros (con variedad real)
 async function azarFiltrado({ mostrarVarias = false, cantidad = 5 } = {}) {
   contenedor.innerHTML = "<div class='card'><div class='info'><p>Buscando con filtros…</p></div></div>";
 
@@ -394,16 +394,24 @@ async function azarFiltrado({ mostrarVarias = false, cantidad = 5 } = {}) {
   try {
     const resp = await fetch(url + "&page=1");
     const data = await resp.json();
-    if (!data.results || data.results.length === 0) {
+    if (!data.results?.length) {
       contenedor.innerHTML = "<div class='card'><div class='info'><p>No encontré nada con esos filtros.</p></div></div>";
       return;
     }
 
     const totalPages = Math.min(data.total_pages, 50);
     const randomPage = Math.floor(Math.random() * totalPages) + 1;
-    const resp2 = await fetch(url + `&page=${randomPage}`);
-    const data2 = await resp2.json();
-    if (!data2.results || data2.results.length === 0) {
+    let resp2 = await fetch(url + `&page=${randomPage}`);
+    let data2 = await resp2.json();
+
+    if (proveedor === "384" && (!data2.results || data2.results.length === 0)) {
+      const urlMX = url.replace("watch_region=AR", "watch_region=MX");
+      const respMX = await fetch(urlMX + `&page=${randomPage}`);
+      const dataMX = await respMX.json();
+      if (dataMX.results?.length) data2 = dataMX;
+    }
+
+    if (!data2.results?.length) {
       contenedor.innerHTML = "<div class='card'><div class='info'><p>No encontré nada en esa página.</p></div></div>";
       return;
     }
@@ -430,7 +438,6 @@ async function azarFiltrado({ mostrarVarias = false, cantidad = 5 } = {}) {
   }
 }
 
-// 🧩 Mini-card
 function miniCard(item) {
   const poster = item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : "";
   const title = item.title || item.original_title || "Sin título";
@@ -445,26 +452,21 @@ function miniCard(item) {
   `;
 }
 
-// 🎯 Click en mini-card
 function attachMiniCardClick(id) {
   const btn = document.querySelector(`.open-btn[data-id="${id}"]`);
   if (btn) btn.addEventListener("click", () => mostrarPelicula(id));
 }
 
-// 🔍 Buscar ID de persona
 async function buscarPersonaId(nombre) {
   try {
     const resp = await fetch(`https://api.themoviedb.org/3/search/person?api_key=${API_KEY}&language=es-MX&query=${encodeURIComponent(nombre)}`);
     const data = await resp.json();
-    if (data.results && data.results.length > 0) {
-      return data.results[0].id;
-    }
+    if (data.results?.length) return data.results[0].id;
   } catch (e) {
     console.error("Error buscando persona:", e);
   }
   return null;
 }
-// 🎬 Mostrar detalles + plataformas + saga
 async function mostrarPelicula(movieId) {
   try {
     const detailsResp = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=es-MX`);
@@ -526,7 +528,6 @@ async function mostrarPelicula(movieId) {
       </div>
     `;
 
-    // 🎞️ Mostrar saga si existe
     if (details.belongs_to_collection?.id) {
       const colResp = await fetch(`https://api.themoviedb.org/3/collection/${details.belongs_to_collection.id}?api_key=${API_KEY}&language=es-MX`);
       const colData = await colResp.json();
@@ -563,7 +564,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// ⚙️ Service Worker (opcional)
+// ⚙️ Service Worker
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js")
     .then(() => console.log("Service Worker registrado"))
