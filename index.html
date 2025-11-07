@@ -303,7 +303,7 @@ async function azarFiltrado({ mostrarVarias = false, cantidad = 5 } = {}) {
 
 // Mini-card HTML
 function miniCard(item) {
-  const poster = item.poster_path ? `https://image.tmdb.org/t/p/w300${item.poster_path}` : "";
+  const poster = item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : "";
   const title = item.title || item.original_title || "Sin título";
   const year = (item.release_date || "").slice(0,4);
   return `
