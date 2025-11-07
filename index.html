@@ -147,38 +147,33 @@
       border-radius: 50%;
       object-fit: cover;
     }
-    .providers img {
-      height: 40px;
-      border-radius: 6px;
-      background: #fff;
-      padding: 3px;
-      margin: 5px;
-      vertical-align: middle;
-    }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
+      gap: 12px;
     }
     .mini-card {
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 10px;
-      padding: 10px;
+      padding: 8px;
     }
     .mini-card img {
       width: 100%;
-      border-radius: 8px;
+      border-radius: 6px;
+      max-height: 240px;
+      object-fit: cover;
     }
     .mini-card .title {
       font-weight: 700;
       color: #fff;
-      margin: 6px 0;
+      margin: 6px 0 2px;
+      font-size: 0.95em;
     }
     .mini-card .year {
       color: #bbb;
-      font-size: 0.9em;
+      font-size: 0.85em;
     }
 
     @media (max-width: 700px) {
@@ -269,19 +264,6 @@
           </div>
 
           <div class="filtro">
-            <label for="proveedor" class="badge">Plataforma</label>
-            <select id="proveedor">
-              <option value="">Cualquiera</option>
-              <option value="8">Netflix</option>
-              <option value="337">Disney+</option>
-              <option value="119">Amazon Prime Video</option>
-              <option value="384">HBO Max</option>
-              <option value="350">Apple TV+</option>
-              <option value="531">Paramount+</option>
-            </select>
-          </div>
-
-          <div class="filtro">
             <label for="actor" class="badge">Actor</label>
             <input type="text" id="actor" placeholder="Nombre del actor">
           </div>
@@ -320,7 +302,6 @@ function resetFiltros() {
   document.getElementById("genero").value = "";
   document.getElementById("anioDesde").value = "";
   document.getElementById("anioHasta").value = "";
-  document.getElementById("proveedor").value = "";
   document.getElementById("actor").value = "";
   document.getElementById("director").value = "";
   document.getElementById("rating").value = 0;
@@ -369,7 +350,6 @@ async function azarFiltrado({ mostrarVarias = false, cantidad = 5 } = {}) {
   const genero = document.getElementById("genero").value;
   const anioDesde = document.getElementById("anioDesde").value;
   const anioHasta = document.getElementById("anioHasta").value;
-  const proveedor = document.getElementById("proveedor").value;
   const actor = document.getElementById("actor").value.trim();
   const director = document.getElementById("director").value.trim();
   const rating = parseFloat(document.getElementById("rating").value);
@@ -379,7 +359,6 @@ async function azarFiltrado({ mostrarVarias = false, cantidad = 5 } = {}) {
   if (genero) url += `&with_genres=${genero}`;
   if (anioDesde) url += `&primary_release_date.gte=${anioDesde}-01-01`;
   if (anioHasta) url += `&primary_release_date.lte=${anioHasta}-12-31`;
-  if (proveedor) url += `&with_watch_providers=${proveedor}&watch_region=AR`;
   if (!isNaN(rating) && rating > 0) url += `&vote_average.gte=${rating}`;
 
   if (actor) {
@@ -401,15 +380,8 @@ async function azarFiltrado({ mostrarVarias = false, cantidad = 5 } = {}) {
 
     const totalPages = Math.min(data.total_pages, 50);
     const randomPage = Math.floor(Math.random() * totalPages) + 1;
-    let resp2 = await fetch(url + `&page=${randomPage}`);
-    let data2 = await resp2.json();
-
-    if (proveedor === "384" && (!data2.results || data2.results.length === 0)) {
-      const urlMX = url.replace("watch_region=AR", "watch_region=MX");
-      const respMX = await fetch(urlMX + `&page=${randomPage}`);
-      const dataMX = await respMX.json();
-      if (dataMX.results?.length) data2 = dataMX;
-    }
+    const resp2 = await fetch(url + `&page=${randomPage}`);
+    const data2 = await resp2.json();
 
     if (!data2.results?.length) {
       contenedor.innerHTML = "<div class='card'><div class='info'><p>No encontré nada en esa página.</p></div></div>";
@@ -439,7 +411,7 @@ async function azarFiltrado({ mostrarVarias = false, cantidad = 5 } = {}) {
 }
 
 function miniCard(item) {
-  const poster = item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : "";
+  const poster = item.poster_path ? `https://image.tmdb.org/t/p/w300${item.poster_path}` : "";
   const title = item.title || item.original_title || "Sin título";
   const year = (item.release_date || "").slice(0,4);
   return `
@@ -480,10 +452,6 @@ async function mostrarPelicula(movieId) {
     const creditsResp = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${API_KEY}&language=es-MX`);
     const credits = await creditsResp.json();
 
-    const providersResp = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=${API_KEY}`);
-    const providersData = await providersResp.json();
-    const providers = providersData.results?.AR?.flatrate || [];
-
     const poster = details.poster_path ? `https://image.tmdb.org/t/p/w500${details.poster_path}` : "";
     const director = credits.crew?.find(p => p.job === "Director");
     const actores = (credits.cast || []).slice(0,4);
@@ -499,6 +467,8 @@ async function mostrarPelicula(movieId) {
     const imdbLink = details.imdb_id 
       ? `<a href="https://www.imdb.com/title/${details.imdb_id}" target="_blank" style="color:#1db954;">(IMDb)</a>` 
       : "";
+
+    const justwatchLink = `https://www.justwatch.com/ar/busqueda?q=${encodeURIComponent(tituloOriginal)}`;
 
     contenedor.innerHTML = `
       <div class="card">
@@ -519,10 +489,10 @@ async function mostrarPelicula(movieId) {
               </div>
             `).join("")}
           </div>
-          <div class="providers">
-            ${providers.length ? providers.map(p => `
-              <img src="https://image.tmdb.org/t/p/w45${p.logo_path}" alt="${p.provider_name}" title="${p.provider_name}">
-            `).join("") : "<em>No disponible en plataformas conocidas para Argentina.</em>"}
+          <div style="margin-top: 15px;">
+            <a href="${justwatchLink}" target="_blank">
+              <button>🔎 Buscar en JustWatch disponibilidad en Plataformas</button>
+            </a>
           </div>
         </div>
       </div>
