@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1db954">
   <meta charset="UTF-8">
   <title>Randomizer by Mundoo.Cine</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1db954">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     html, body { height: 100%; min-height: 100vh; }
@@ -31,7 +31,7 @@
     }
     .header-box {
       background: rgba(0,0,0,0.7); padding: 20px 30px; border-radius: 12px;
-      display: block; max-width: 780px; margin: 0 auto;
+      display: block; max-width: 800px; margin: 0 auto;
       box-shadow: 0 0 10px rgba(0,0,0,0.3); text-align: center;
       opacity: 0; transform: translateY(20px);
       animation: aparecer 0.8s ease-out forwards;
@@ -39,43 +39,166 @@
     @keyframes aparecer { to { opacity: 1; transform: translateY(0); } }
     .header-box h1 { font-size: 2.2em; margin: 0; color: #1db954; letter-spacing: 2px; }
     .header-box .firma { font-size: 1em; color: #ccc; margin-top: 5px; }
-    .controls { padding: 12px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; }
-    .controls .group { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; }
-    input, select, button { padding: 10px 12px; font-size: 16px; margin: 2px; border: none; border-radius: 6px; }
-    input, select { background: rgba(255,255,255,0.1); color: #fff; }
-    button { background: #1db954; color: #fff; cursor: pointer; transition: all 0.3s ease; }
-    button:hover { background: #1ed760; box-shadow: 0 0 10px rgba(29,185,84,0.7); transform: translateY(-2px); }
-    select { background: #222; color: #fff; }
-    select option { background: #222; color: #fff; }
-    .range-wrap { display:flex; align-items:center; gap:10px; }
-    .range-wrap input[type="range"] { width: 180px; accent-color: #1db954; }
-    .badge { background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 6px; font-size: 0.9em; }
+
+    .controls { padding: 15px; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+    .group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      align-items: flex-end;
+    }
+    .filtro {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+
+    input, select, button {
+      padding: 10px 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+    }
+    input, select {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+    button {
+      background: #1db954;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background: #1ed760;
+      box-shadow: 0 0 10px rgba(29,185,84,0.7);
+      transform: translateY(-2px);
+    }
+    select option {
+      background: #222;
+      color: #fff;
+    }
+
+    .range-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .range-wrap input[type="range"] {
+      width: 180px;
+      accent-color: #1db954;
+    }
+
+    .badge {
+      background: rgba(255,255,255,0.1);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.9em;
+    }
+
     .card {
-      margin: 30px auto; padding: 20px; background: rgba(20,20,20,0.85);
-      border-radius: 12px; max-width: 1000px; border: 1px solid rgba(255,255,255,0.1);
-      display: flex; gap: 20px; text-align: left;
+      margin: 30px auto;
+      padding: 20px;
+      background: rgba(20,20,20,0.85);
+      border-radius: 12px;
+      max-width: 1000px;
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      gap: 20px;
+      text-align: left;
     }
     .poster { flex: 1; }
-    .poster img { width: 100%; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.8); }
+    .poster img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.8);
+    }
     .info { flex: 2; }
     h2 { color: #ffcc00; margin-top: 0; }
-    .extra { font-size: 0.95em; color: #bbb; margin-top: 10px; }
-    .info p { font-style: italic; color: #ddd; line-height: 1.5; }
-    .cast { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-    .actor { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 20px; }
-    .actor img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; }
-    .providers img { height: 40px; border-radius: 6px; background: #fff; padding: 3px; margin: 5px; vertical-align: middle; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap: 16px; }
-    .mini-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 10px; }
-    .mini-card img { width: 100%; border-radius: 8px; }
-    .mini-card .title { font-weight: 700; color: #fff; margin: 6px 0; }
-    .mini-card .year { color: #bbb; font-size: 0.9em; }
+    .extra {
+      font-size: 0.95em;
+      color: #bbb;
+      margin-top: 10px;
+    }
+    .info p {
+      font-style: italic;
+      color: #ddd;
+      line-height: 1.5;
+    }
+    .cast {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .actor {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.05);
+      padding: 6px 10px;
+      border-radius: 20px;
+    }
+    .actor img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .providers img {
+      height: 40px;
+      border-radius: 6px;
+      background: #fff;
+      padding: 3px;
+      margin: 5px;
+      vertical-align: middle;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
+      gap: 16px;
+    }
+    .mini-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 10px;
+    }
+    .mini-card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .mini-card .title {
+      font-weight: 700;
+      color: #fff;
+      margin: 6px 0;
+    }
+    .mini-card .year {
+      color: #bbb;
+      font-size: 0.9em;
+    }
 
     @media (max-width: 700px) {
-      .card { flex-direction: column; padding: 15px; gap: 15px; }
-      .poster img { max-width: 260px; margin: 0 auto; display: block; }
-      .actor img { width: 50px; height: 50px; }
-      .range-wrap input[type="range"] { width: 140px; }
+      .card {
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px;
+      }
+      .poster img {
+        max-width: 260px;
+        margin: 0 auto;
+        display: block;
+      }
+      .actor img {
+        width: 50px;
+        height: 50px;
+      }
+      .range-wrap input[type="range"] {
+        width: 140px;
+      }
     }
   </style>
 </head>
@@ -87,78 +210,90 @@
       <h1>Movie Randomizer</h1>
       <p class="firma">@mundoo.cine</p>
 
-      <!-- Búsqueda por título -->
+      <!-- 🔍 Búsqueda por título -->
       <div class="controls">
         <div class="group">
-          <input type="text" id="busqueda" placeholder="Escribí un título de película">
+          <div class="filtro">
+            <label for="busqueda" class="badge">Título</label>
+            <input type="text" id="busqueda" placeholder="Escribí un título de película">
+          </div>
           <button onclick="buscarPelicula()">Buscar película</button>
           <button onclick="azar()">🎲 Azar (sin filtros)</button>
         </div>
       </div>
 
-      <!-- Filtros -->
+      <!-- 🎛️ Filtros -->
       <div class="controls">
         <div class="group">
-          <!-- Género -->
-          <label for="genero" class="badge">Género</label>
-          <select id="genero">
-            <option value="">Cualquiera</option>
-            <option value="28">Acción</option>
-            <option value="12">Aventura</option>
-            <option value="16">Animación</option>
-            <option value="35">Comedia</option>
-            <option value="80">Crimen</option>
-            <option value="99">Documental</option>
-            <option value="18">Drama</option>
-            <option value="10751">Familia</option>
-            <option value="14">Fantasía</option>
-            <option value="36">Historia</option>
-            <option value="27">Terror</option>
-            <option value="10402">Música</option>
-            <option value="9648">Misterio</option>
-            <option value="10749">Romance</option>
-            <option value="878">Ciencia Ficción</option>
-            <option value="10770">Película de TV</option>
-            <option value="53">Thriller</option>
-            <option value="10752">Bélica</option>
-            <option value="37">Western</option>
-          </select>
+          <div class="filtro">
+            <label for="genero" class="badge">Género</label>
+            <select id="genero">
+              <option value="">Cualquiera</option>
+              <option value="28">Acción</option>
+              <option value="12">Aventura</option>
+              <option value="16">Animación</option>
+              <option value="35">Comedia</option>
+              <option value="80">Crimen</option>
+              <option value="99">Documental</option>
+              <option value="18">Drama</option>
+              <option value="10751">Familia</option>
+              <option value="14">Fantasía</option>
+              <option value="36">Historia</option>
+              <option value="27">Terror</option>
+              <option value="10402">Música</option>
+              <option value="9648">Misterio</option>
+              <option value="10749">Romance</option>
+              <option value="878">Ciencia Ficción</option>
+              <option value="10770">Película de TV</option>
+              <option value="53">Thriller</option>
+              <option value="10752">Bélica</option>
+              <option value="37">Western</option>
+            </select>
+          </div>
 
-          <!-- Años -->
-          <label for="anioDesde" class="badge">Desde</label>
-          <input type="number" id="anioDesde" placeholder="1990" min="1900" max="2025">
-          <label for="anioHasta" class="badge">Hasta</label>
-          <input type="number" id="anioHasta" placeholder="2005" min="1900" max="2025">
+          <div class="filtro">
+            <label for="anioDesde" class="badge">Año desde</label>
+            <input type="number" id="anioDesde" placeholder="1990" min="1900" max="2025">
+          </div>
 
-          <!-- Plataforma -->
-          <label for="proveedor" class="badge">Plataforma</label>
-          <select id="proveedor">
-            <option value="">Cualquiera</option>
-            <option value="8">Netflix</option>
-            <option value="337">Disney+</option>
-            <option value="119">Amazon Prime Video</option>
-            <option value="384">HBO Max</option>
-            <option value="350">Apple TV+</option>
-            <option value="531">Paramount+</option>
-          </select>
+          <div class="filtro">
+            <label for="anioHasta" class="badge">Año hasta</label>
+            <input type="number" id="anioHasta" placeholder="2005" min="1900" max="2025">
+          </div>
 
-          <!-- Actor / Director -->
-          <label for="actor" class="badge">Actor</label>
-          <input type="text" id="actor" placeholder="Nombre del actor">
-          <label for="director" class="badge">Director</label>
-          <input type="text" id="director" placeholder="Nombre del director">
-        </div>
+          <div class="filtro">
+            <label for="proveedor" class="badge">Plataforma</label>
+            <select id="proveedor">
+              <option value="">Cualquiera</option>
+              <option value="8">Netflix</option>
+              <option value="337">Disney+</option>
+              <option value="119">Amazon Prime Video</option>
+              <option value="384">HBO Max</option>
+              <option value="350">Apple TV+</option>
+              <option value="531">Paramount+</option>
+            </select>
+          </div>
 
-        <!-- Rating (barra de volumen) -->
-        <div class="group">
-          <label for="rating" class="badge">Rating mínimo</label>
-          <div class="range-wrap">
-            <input type="range" id="rating" min="0" max="10" step="0.5" value="0" oninput="document.getElementById('ratingValue').innerText = this.value">
-            <span id="ratingValue">0</span>/10
+          <div class="filtro">
+            <label for="actor" class="badge">Actor</label>
+            <input type="text" id="actor" placeholder="Nombre del actor">
+          </div>
+
+          <div class="filtro">
+            <label for="director" class="badge">Director</label>
+            <input type="text" id="director" placeholder="Nombre del director">
+          </div>
+
+          <div class="filtro">
+            <label for="rating" class="badge">Rating mínimo</label>
+            <div class="range-wrap">
+              <input type="range" id="rating" min="0" max="10" step="0.5" value="0" oninput="document.getElementById('ratingValue').innerText = this.value">
+              <span id="ratingValue">0</span>/10
+            </div>
           </div>
         </div>
 
-        <!-- Acciones -->
+        <!-- Botones de acción -->
         <div class="group">
           <button onclick="azarFiltrado()">🎲 Azar (con filtros)</button>
           <button onclick="azarFiltrado({ mostrarVarias: true, cantidad: 5 })">🎲 Azar varias (5)</button>
@@ -168,13 +303,13 @@
     </div>
   </div>
 
-  <!-- Contenedor de resultados -->
+  <!-- 📦 Contenedor de resultados -->
   <div id="resultado"></div>
 <script>
 const API_KEY = "b9911fb46e0e11491607c279cce876a1"; 
 const contenedor = document.getElementById("resultado");
 
-// Reset de filtros
+// 🧹 Reset de filtros
 function resetFiltros() {
   document.getElementById("genero").value = "";
   document.getElementById("anioDesde").value = "";
@@ -186,7 +321,7 @@ function resetFiltros() {
   document.getElementById("ratingValue").innerText = "0";
 }
 
-// Buscar por título
+// 🔍 Buscar por título
 async function buscarPelicula() {
   const query = document.getElementById("busqueda").value.trim();
   if (!query) {
@@ -208,7 +343,7 @@ async function buscarPelicula() {
   }
 }
 
-// Película al azar (sin filtros)
+// 🎲 Azar sin filtros
 async function azar() {
   contenedor.innerHTML = "<div class='card'><div class='info'><p>Buscando al azar…</p></div></div>";
   try {
@@ -227,7 +362,7 @@ async function azar() {
   }
 }
 
-// Azar con filtros — con variedad real para varias
+// 🎛️ Azar con filtros (con variedad real)
 async function azarFiltrado({ mostrarVarias = false, cantidad = 5 } = {}) {
   contenedor.innerHTML = "<div class='card'><div class='info'><p>Buscando con filtros…</p></div></div>";
 
@@ -247,7 +382,6 @@ async function azarFiltrado({ mostrarVarias = false, cantidad = 5 } = {}) {
   if (proveedor) url += `&with_watch_providers=${proveedor}&watch_region=AR`;
   if (!isNaN(rating) && rating > 0) url += `&vote_average.gte=${rating}`;
 
-  // Actores / Directores → IDs
   if (actor) {
     const actorId = await buscarPersonaId(actor);
     if (actorId) url += `&with_cast=${actorId}`;
@@ -258,7 +392,6 @@ async function azarFiltrado({ mostrarVarias = false, cantidad = 5 } = {}) {
   }
 
   try {
-    // Primero: conocer total_pages
     const resp = await fetch(url + "&page=1");
     const data = await resp.json();
     if (!data.results || data.results.length === 0) {
@@ -267,7 +400,6 @@ async function azarFiltrado({ mostrarVarias = false, cantidad = 5 } = {}) {
     }
 
     const totalPages = Math.min(data.total_pages, 50);
-    // Elegimos una página aleatoria SIEMPRE para evitar repetir
     const randomPage = Math.floor(Math.random() * totalPages) + 1;
     const resp2 = await fetch(url + `&page=${randomPage}`);
     const data2 = await resp2.json();
@@ -277,7 +409,6 @@ async function azarFiltrado({ mostrarVarias = false, cantidad = 5 } = {}) {
     }
 
     if (mostrarVarias) {
-      // Mezclamos la página y tomamos N distintos
       const shuffled = data2.results
         .map(r => ({ r, sort: Math.random() }))
         .sort((a, b) => a.sort - b.sort)
@@ -287,12 +418,10 @@ async function azarFiltrado({ mostrarVarias = false, cantidad = 5 } = {}) {
       contenedor.innerHTML = `<div class="grid">
         ${lista.map(item => miniCard(item)).join("")}
       </div>`;
-
       lista.forEach(item => attachMiniCardClick(item.id));
       return;
     }
 
-    // Solo una al azar
     const randomMovie = data2.results[Math.floor(Math.random() * data2.results.length)];
     mostrarPelicula(randomMovie.id);
   } catch (e) {
@@ -301,7 +430,7 @@ async function azarFiltrado({ mostrarVarias = false, cantidad = 5 } = {}) {
   }
 }
 
-// Mini-card HTML
+// 🧩 Mini-card
 function miniCard(item) {
   const poster = item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : "";
   const title = item.title || item.original_title || "Sin título";
@@ -316,13 +445,13 @@ function miniCard(item) {
   `;
 }
 
-// Click para abrir ficha desde mini-cards
+// 🎯 Click en mini-card
 function attachMiniCardClick(id) {
   const btn = document.querySelector(`.open-btn[data-id="${id}"]`);
   if (btn) btn.addEventListener("click", () => mostrarPelicula(id));
 }
 
-// ID de persona (actor/director)
+// 🔍 Buscar ID de persona
 async function buscarPersonaId(nombre) {
   try {
     const resp = await fetch(`https://api.themoviedb.org/3/search/person?api_key=${API_KEY}&language=es-MX&query=${encodeURIComponent(nombre)}`);
@@ -335,7 +464,7 @@ async function buscarPersonaId(nombre) {
   }
   return null;
 }
-// Mostrar detalles + plataformas + mini-saga
+// 🎬 Mostrar detalles + plataformas + saga
 async function mostrarPelicula(movieId) {
   try {
     const detailsResp = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=es-MX`);
@@ -353,7 +482,7 @@ async function mostrarPelicula(movieId) {
     const providersData = await providersResp.json();
     const providers = providersData.results?.AR?.flatrate || [];
 
-    const poster = details.poster_path ? `https://image.tmdb.org/t/p/w300${details.poster_path}` : "";
+    const poster = details.poster_path ? `https://image.tmdb.org/t/p/w500${details.poster_path}` : "";
     const director = credits.crew?.find(p => p.job === "Director");
     const actores = (credits.cast || []).slice(0,4);
     const generos = (details.genres || []).map(g => g.name).join(", ");
@@ -383,7 +512,7 @@ async function mostrarPelicula(movieId) {
           <div class="cast">
             ${actores.map(a => `
               <div class="actor">
-                ${a.profile_path ? `<img src="https://image.tmdb.org/t/p/w185${a.profile_path}" alt="${a.name}">` : ""}
+                ${a.profile_path ? `<img src="https://image.tmdb.org/t/p/w300${a.profile_path}" alt="${a.name}">` : ""}
                 <span>${a.name}</span>
               </div>
             `).join("")}
@@ -397,7 +526,7 @@ async function mostrarPelicula(movieId) {
       </div>
     `;
 
-    // Sagas: mostrar 3 títulos de la colección si aplica
+    // 🎞️ Mostrar saga si existe
     if (details.belongs_to_collection?.id) {
       const colResp = await fetch(`https://api.themoviedb.org/3/collection/${details.belongs_to_collection.id}?api_key=${API_KEY}&language=es-MX`);
       const colData = await colResp.json();
@@ -426,7 +555,7 @@ async function mostrarPelicula(movieId) {
   }
 }
 
-// Enter para disparar búsqueda
+// ⌨️ Enter para buscar
 document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("busqueda");
   input.addEventListener("keydown", (e) => {
@@ -434,7 +563,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Service Worker (si lo tenés)
+// ⚙️ Service Worker (opcional)
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js")
     .then(() => console.log("Service Worker registrado"))
